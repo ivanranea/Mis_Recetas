@@ -10,7 +10,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
 
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -64,40 +64,61 @@
                 <!-- Scrollable page content -->
                 <div class="page-content">
                     <div class="block">
-                        <p>Page content goes here</p>
-                        <!-- Link to another page -->
-                        <a href="/about/" data-view=".page-content">About app</a>
-
-                        <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
-                        <p><a href="#" data-popup=".my-popup" class="popup-open">Open Popup</a></p>
-
-                        <!-- And somewhere in DOM -->
-                        <div class="popup my-popup">
-                            <div class="view">
-                                <div class="page">
-                                    <div class="navbar">
-                                        <div class="navbar-bg"></div>
-                                        <div class="navbar-inner">
-                                            <div class="title">Popup</div>
-                                            <div class="right">
-                                                <!-- Link to close popup -->
-                                                <a class="link popup-close">Close</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="page-content">
-                                      ...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="list no-hairlines-md">
+					<ul>
+						<li class="item-content item-input item-input-outline">
+						<div class="item-inner">
+							<div class="item-title item-floating-label">E-mail</div>
+							<div class="item-input-wrap">
+							<input type="email" placeholder="E-mail" />
+							<span class="input-clear-button"></span>
+							</div>
+						</div>
+						</li>
+						<li class="item-content item-input item-input-outline">
+						<div class="item-inner">
+							<div class="item-title item-floating-label">Contraseña</div>
+							<div class="item-input-wrap">
+							<input type="password" placeholder="Contraseña" />
+							<span class="input-clear-button"></span>
+							</div>
+						</div>
+						</li>
+					</ul>
                     </div>
+					
+					<div class="row">
+					<a href="/principal/" class="col button button-raised button-fill button-round">Ingresar</a>
+					<a href="/registro/" class="col button button-raised button-fill button-round">Registrarme</a>
+					</div>
+					
+					</div>
                 </div>
             </div>
         </div>
     </div>
-
-
+	
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+	
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+		https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+	
+	<script>
+	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "AIzaSyDK_f94AxdNVD7d5yBaE71xoGFyEueuYcg",
+		authDomain: "mis-recetas-d4106.firebaseapp.com",
+		projectId: "mis-recetas-d4106",
+		storageBucket: "mis-recetas-d4106.appspot.com",
+		messagingSenderId: "996535060031",
+		appId: "1:996535060031:web:a865740d3116c52a4bda8a"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	</script>
+	
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
