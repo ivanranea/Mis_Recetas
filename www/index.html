@@ -56,6 +56,8 @@
                 <!-- Toolbar links -->
                 <a href="#" class="link">Link 1</a>
                 <a href="#" class="link">Link 2</a>
+				<a href="#" class="link">Link 3</a>
+				<a href="#" class="link">Link 4</a>
                 </div>
             </div>
         
@@ -70,8 +72,9 @@
 						<div class="item-inner">
 							<div class="item-title item-floating-label">E-mail</div>
 							<div class="item-input-wrap">
-							<input type="email" placeholder="E-mail" />
+							<input id="emailLogin" type="email" value="ivan_ranea@hotmail.com" placeholder="Ingresa tu E-mail" required validate/>
 							<span class="input-clear-button"></span>
+							<div id="emailInfo"class="item-input-info"></div>
 							</div>
 						</div>
 						</li>
@@ -79,16 +82,30 @@
 						<div class="item-inner">
 							<div class="item-title item-floating-label">Contraseña</div>
 							<div class="item-input-wrap">
-							<input type="password" placeholder="Contraseña" />
+							<input id="passLogin" type="password" value="alphonse01" placeholder="Ingresa tu Contraseña" required validate/>
 							<span class="input-clear-button"></span>
+							<div id="passInfo"class="item-input-info">Mínimo de 6 carácteres</div>
 							</div>
 						</div>
+						</li>
+						
+						<li>
+						<label class="item-checkbox item-content">
+							<!-- Checkbox input -->
+							<input id="recordarUsuario" type="checkbox"/>
+							<!-- Checkbox icon -->
+							<i class="icon icon-checkbox"></i>
+							<div class="item-inner">
+							<!-- Checkbox Title -->
+							<div class="item-title">Recordar datos</div>
+							</div>
+						</label>
 						</li>
 					</ul>
                     </div>
 					
 					<div class="row">
-					<a href="/principal/" class="col button button-raised button-fill button-round">Ingresar</a>
+					<a id="btnlogin" class="col button button-raised button-fill button-round">Ingresar</a>
 					<a href="/registro/" class="col button button-raised button-fill button-round">Registrarme</a>
 					</div>
 					

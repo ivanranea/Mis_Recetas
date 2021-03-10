@@ -1,6 +1,10 @@
   
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
+var storage = window.localstorage;
+
+var state = "";
+
 
 var app = new Framework7({
     // App root element
@@ -79,16 +83,68 @@ $$(document).on('page:init', '.page[data-name="registro"]', function (e) {
 
 })
 
+
+$$(document).on('page:init', '.page[data-name="index"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	
+	$$("#btnlogin").on("click", fnLogin);
+	
+	
+	
+	
+
+})
+
+$$(document).on('page:init', '.page[data-name="principal"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	
+
+
+})
+
+$$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	
+
+
+})
+
 function fnRegistrarUsuario(){
 	
-	nombre = $$("#nombregistro").val();
-	email = $$("#emailregistro").val();
-	password = $$("#passregistro").val();
-	
+	nombre = $$("#nombRegistro").val();
+	email = $$("#emailRegistro").val();
+	password = $$("#passRegistro").val();
 	console.log("nombre: "+ nombre +", email: "+email+", pass: "+ password);
 	
-/*	firebase.auth().createUserWithEmailAndPassword(email, password)
+	firebase.auth().createUserWithEmailAndPassword(email, password) //Registro de usuario
 	.then(function (){
+		
+		firebase.auth().signInWithEmailAndPassword(email, password) //Si se registra correctamente, hace el login automáticamente
+		.then((user) => {
+			
+		app.views.main.router.navigate("/principal/");
+		
+		})
+		.catch((error) => {
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		if(errorCode == "auth/wrong-password"){
+			
+			$$("#passInfo").html("Contraseña incorrecta");
+			$$("#passInfo").addClass("text-color-red");
+			
+		}
+		if(errorCode == "auth/user-not-found"){
+			
+			$$("#emailInfo").html("E-mail incorrecto");
+			$$("#emailInfo").addClass("text-color-red");
+			
+		}
+		
+		});
 		
 		//mandar mail de verificacion
 		
@@ -104,7 +160,40 @@ function fnRegistrarUsuario(){
 	}
 	console.log(error);
 	});
-	alert("q paso?")*/
+
 }
 
-
+function fnLogin(){ //Log in
+	
+	email = $$("#emailLogin").val();
+	password = $$("#passLogin").val();
+	checkRecordar = $$("#recordarUsuario").prop("checked");
+	console.log(checkRecordar);
+	
+	firebase.auth().signInWithEmailAndPassword(email, password)
+	.then((user) => {
+		if(checkRecordar == true){
+			var usuario = { "email" : email, "password" : password, "nombre" : nombre};
+			usuarioAGuardar = JSON.parse(usuarioAGuardar);
+			usuarioAGuardar.email = email;
+			
+		}
+		app.views.main.router.navigate("/principal/"); //En log in exitoso invoca la página Principal
+		
+	})
+	.catch((error) => {
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		if(errorCode == "auth/wrong-password"){
+			
+			$$("#passInfo").html("Contraseña incorrecta");
+			$$("#passInfo").addClass("text-color-red");
+			
+		}else if(errorCode == "auth/user-not-found"){
+			
+			$$("#emailInfo").html("E-mail incorrecto");
+			$$("#emailInfo").addClass("text-color-red");
+			
+		}
+	});
+}

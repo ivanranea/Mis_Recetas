@@ -1,5 +1,5 @@
 <!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
-<div class="page" data-name="about">
+<div class="page" data-name="registro">
     <div class="navbar">
         <div class="navbar-inner sliding">
         <div class="left">
@@ -18,7 +18,7 @@
 			<div class="item-inner">
 				<div class="item-title item-floating-label">Nombre</div>
 				<div class="item-input-wrap">
-				<input id="nombRegistro" type="text" placeholder="Nombre"/>
+				<input id="nombRegistro" type="text" placeholder="Nombre" required/>
 				<span class="input-clear-button"></span>
 				</div>
 			</div>
@@ -27,7 +27,7 @@
 			<div class="item-inner">
 				<div class="item-title item-floating-label">E-mail</div>
 				<div class="item-input-wrap">
-				<input id="emailregistro" type="email" placeholder="E-mail"/>
+				<input id="emailRegistro" type="email" placeholder="E-mail" required validate/>
 				<span class="input-clear-button"></span>
 				</div>
 			</div>
@@ -36,13 +36,15 @@
 			<div class="item-inner">
 				<div class="item-title item-floating-label">Contraseña</div>
 				<div class="item-input-wrap">
-				<input id="passregistro" type="password" placeholder="Contraseña"/>
+				<input id="passRegistro" type="password" placeholder="Contraseña" required validate/>
 				<span class="input-clear-button"></span>
 				</div>
 			</div>
 			</li>
 		</div>
-			<a id="btnregistro" href="/principal/" class="col button button-raised button-fill button-round">Confirmar</a>
 		</ul>
+		
+		<a id="btnregistro" href="/principal/" class="col button button-raised button-fill button-round">Confirmar</a>
+		
     </div>
 </div>
