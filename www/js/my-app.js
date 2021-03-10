@@ -98,16 +98,26 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-
 	
-
+	
+	for(j=0; j<2; j++){
+	$$("#contenedorCateg").append("<div class='row'>");
+	
+	for(i=1; i<=2 ; i++){
+		
+		$$("#contenedorCateg").append("<a href='#' class='col-50 button button-large button-raised'>Categoría "+i+"</a>");
+		
+	}
+	
+	$$("#contenedorCateg").append("</div>");
+	}
 
 })
 
 $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
-	
+	$$("#btncrearCateg").on("click", fnCrearCateg);
 
 
 })
@@ -197,3 +207,34 @@ function fnLogin(){ //Log in
 		}
 	});
 }
+
+
+/*function fnCrearCateg(){
+	
+	nombreCateg = $$("#nombreNuevaCateg").val();
+	//iconoCateg = $$("#iconoNuevaCateg")    Tomar icono del pop up
+	//imgCateg = $$("#imgNuevaCateg")
+	
+	nuevaCateg = {"nombre" : nombreCateg, "icono" : iconoCateg, "imagen" : imgCateg};
+	
+	
+	
+	
+	
+}*/
+
+/*function mostrarCateg (){
+	
+	$$("#contenedorCateg").html("<div class='row'>");
+	
+	for(i=1; i<=2 ; i++){
+		
+		$$("#contenedorCateg").html("<a href='#' class='col-50 button button-large button-raised'>Categoría "+i+"</a>");
+		
+	}
+	
+	$$("#contenedorCateg").html("</div>");
+	
+	
+	
+}*/
