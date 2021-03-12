@@ -1,10 +1,6 @@
   
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
-var storage = window.localstorage;
-
-var state = "";
-
 
 var app = new Framework7({
     // App root element
@@ -58,6 +54,20 @@ var app = new Framework7({
     ]
     // ... other parameters
   });
+  
+var storage = window.localstorage;
+var db = firebase.firestore();
+var colCateg = db.collection("categorias");
+var colRecetas = db.collection("recetas");
+var colUsuarios = db.collection("usuarios");
+
+var state = "";
+
+var emailUsuario = "ivan_ranea@hotmail.com";
+
+var maxCateg = 12;
+var idArray = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
+var lastID = "";
 
 var mainView = app.views.create('.view-main');
 
@@ -99,19 +109,8 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
+	//mostrarCateg();
 	
-	for(j=0; j<2; j++){
-	$$("#contenedorCateg").append("<div class='row'>");
-	
-	for(i=1; i<=2 ; i++){
-		
-		$$("#contenedorCateg").append("<a href='#' class='col-50 button button-large button-raised'>Categoría "+i+"</a>");
-		
-	}
-	
-	$$("#contenedorCateg").append("</div>");
-	}
-
 })
 
 $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
@@ -209,32 +208,109 @@ function fnLogin(){ //Log in
 }
 
 
-/*function fnCrearCateg(){
+function fnCrearCateg(){
+	
+	/*var id = "";
+	
+	for (i=0; i<10; i++){
+		
+		datos = {Nombre : "Categ "+i, Icono : "Icono "+i, Imagen : "Imagen "+i, Email: emailUsuario};
+		id = i.toString();
+		colCateg.doc(id).set(datos);
+	}
+	
+	i=0;*/
+	
+	var categRef = colCateg;
+	var query = categRef.where("Email", "==", emailUsuario);
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			console.log("id: " + doc.id);
+			lastID = doc.id;
+			console.log("last id: " +lastID);
+			
+		});
+	})
+	.catch(function (error){
+		console.log("Error");
+	});
+	
+	console.log("last id after get; " + lastID);
+	
+	if(lastID >= "12"){
+		alert("Limite de categorías alcanzado");
+		return;
+	}
+	
 	
 	nombreCateg = $$("#nombreNuevaCateg").val();
 	//iconoCateg = $$("#iconoNuevaCateg")    Tomar icono del pop up
-	//imgCateg = $$("#imgNuevaCateg")
+	//imgCateg = $$("#imgNuevaCateg")       subir imagen
 	
-	nuevaCateg = {"nombre" : nombreCateg, "icono" : iconoCateg, "imagen" : imgCateg};
+	nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "Email" : emailUsuario};
+	
+	id = lastID + 1;
+	colCateg.doc(id).set(nuevaCateg);
 	
 	
-	
-	
-	
-}*/
+}
 
-/*function mostrarCateg (){
+function mostrarCateg (){
 	
-	$$("#contenedorCateg").html("<div class='row'>");
+	
+	var categRef = colCateg;
+	var query = categRef.where("Email", "==", emailUsuario);
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			console.log("ID: " + doc.id);
+			console.log("nombre: " + doc.data().nombre);
+			console.log("icono :" + doc.data().icono);
+			console.log("imagen :" + doc.data().imagen);
+			console.log("email :" + doc.data().Email);
+			
+			
+		});
+	})
+	.catch(function (error){
+		console.log("Error");
+	});
+	
+	agregar = "";
+	for(j=0; j<2; j++){
+	agregar += "<div class='row'>";
 	
 	for(i=1; i<=2 ; i++){
 		
-		$$("#contenedorCateg").html("<a href='#' class='col-50 button button-large button-raised'>Categoría "+i+"</a>");
+		agregar += "<a href='#' class='col-50 button button-large button-raised'></a>";
 		
 	}
 	
-	$$("#contenedorCateg").html("</div>");
+	agregar += "</div>";
+	}
+	
+	$$("#contenedorCateg").append(agregar);
+}
+
+function getCategdb(){
+	
+	var categRef = colCateg;
+	var query = categRef.where("Email", "==", emailUsuario);
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+		});
+	})
+	.catch(function (error){
+		console.log("Error");
+	});
 	
 	
 	
-}*/
+}
