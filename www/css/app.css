@@ -84,4 +84,29 @@
 	font-family: 'Poppins', Arial, sans-serif;
 }
 
+.crop{
+	width: 100%; 
+	height: 30%;
+	object-fit: cover;
+	object-position: 20% 10%;
+	position: relative;
+}
 
+.centerTextimg{
+	
+	text-align: center;
+	position: absolute;
+	background-color: black;
+	color: white;
+	width: 100%;
+	top: 0px;
+	opacity: 1;
+
+	
+}
+
+.contenedorImg{
+
+	position: relative
+	
+}
