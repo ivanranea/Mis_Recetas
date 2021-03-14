@@ -70,6 +70,7 @@ var colRecetas = db.collection("recetas");
 var colUsuarios = db.collection("usuarios");
 
 var idCategSelec = "";
+var txtnombre = "";
 
 var emailUsuario = "ivan_ranea@hotmail.com";
 
@@ -83,14 +84,13 @@ var mainView = app.views.create('.view-main');
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 	
-	/*var id = "";
 	
-	
+	/*
 	for (i=0; i<5; i++){
 		
 		datos = {nombre : "Categ "+i, icono : "Icono "+i, imagen : "Imagen "+i, email: emailUsuario};
-		id = i.toString();
-		colCateg.doc(id).set(datos);
+		colCateg.add(datos);
+		console.log("categs creadas inicio");
 	}*/
 	
 });
@@ -127,7 +127,7 @@ $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
 	mostrarCateg();
-	$$(".categs").on("click", fnTomaridCateg);
+	
 	
 })
 
@@ -142,23 +142,31 @@ $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-	console.log(idCategSelec);
-	var query = colCateg.doc("idCategSelec");
+	
+	console.log("Nombre categoría: " + txtnombre);
+	var ids = [];
+	var query = colCateg.where("email", "==", emailUsuario).where("nombre", "==", txtnombre);
+	
 	query.get()
-	.then((doc) => {
-    if (doc.exists) {
-        
-		var nombre = doc.data().nombre;
-		//traer icono e imagen 
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			ids.push(doc.id);
+			
+		});
 		
-		$$("#nombreEditarCateg").val(nombre);
+		for(i=0; i<(ids.length); i++){
+			
+			if(ids[i] == idCategSelec){
+				$$("#nombreEditarCateg").val(txtnombre);
+			}
+		}
 		
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-	}).catch((error) => {
-		console.log("Error getting document:", error);
+		$$("#btnactualizarCateg").on("click", fnActualizarCategs);
+		
+	})
+	.catch(function (error){
+		console.log("Error");
 	});
 
 })
@@ -167,7 +175,7 @@ $$(document).on('page:init', '.page[data-name="categElegida"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
 	
-	
+	$$("#btnborrarCateg").on("click", fnBorrarCateg);
 	
 	
 
@@ -230,7 +238,6 @@ function fnLogin(){ //Log in
 	email = $$("#emailLogin").val();
 	password = $$("#passLogin").val();
 	checkRecordar = $$("#recordarUsuario").prop("checked");
-	console.log(checkRecordar);
 	
 	firebase.auth().signInWithEmailAndPassword(email, password)
 	.then((user) => {
@@ -265,18 +272,18 @@ function fnCrearCateg(){
 	
 	var categRef = colCateg;
 	var query = categRef.where("Email", "==", emailUsuario);
+	cont = 0;
 	
 	query.get()
 	.then(function (querySnapshot){
 		querySnapshot.forEach(function(doc){
-			lastID = doc.id;
+			cont++;
+			
 		});
 		
-		console.log("last id after get; " + lastID);
-	
-		lastID = parseInt(lastID);
-		if(lastID >= maxCateg){
-			alert("Limite de categorías alcanzado");
+		console.log("cont :" + cont);
+		if(cont >= maxCateg){
+			app.dialog.alert("Limite de categorías alcanzado");
 			return;
 		}
 		
@@ -286,9 +293,8 @@ function fnCrearCateg(){
 		
 		nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "Email" : emailUsuario};
 		
-		id = lastID + 1;
-		id = id.toString();
-		colCateg.doc(id).set(nuevaCateg);
+		colCateg.add(nuevaCateg);
+		console.log("add crear categ");
 		
 	})
 	.catch(function (error){
@@ -301,8 +307,7 @@ function mostrarCateg (){
 	
 	var nombres = [];
 	var idcateg = [];
-	var categRef = colCateg;
-	var query = categRef.where("email", "==", emailUsuario);
+	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
 	var agregar = "";
 	
 	query.get()
@@ -313,7 +318,7 @@ function mostrarCateg (){
 			idcateg.push(doc.id);
 			
 		});
-		console.log("length: "+nombres.length);
+		
 		var k = 0;
 		largo = Math.ceil((nombres.length/2));
 
@@ -322,7 +327,7 @@ function mostrarCateg (){
 		
 		for(i=0; i<2 ; i++){
 			if(k < nombres.length){
-			
+				
 				agregar += "<a id='"+idcateg[k]+"' href='/categElegida/' class='col-50 button button-large button-raised categs'>"+nombres[k]+"</a>";
 				k++;
 				
@@ -334,7 +339,7 @@ function mostrarCateg (){
 		
 		$$("#contenedorCateg").append(agregar);
 		
-		
+		$$(".categs").on("click", fnTomaridCateg);
 		
 	})
 	.catch(function (error){
@@ -359,6 +364,45 @@ function onErrorCamara(){
 }
 
 function fnTomaridCateg(){
+	
 	idCategSelec = this.id;
-	console.log("id sleccionado: " +idCategSelec);
+	txtnombre = $$("#" + idCategSelec).text();
+
+}
+
+
+function fnActualizarCategs(){
+	
+	var nuevnombre = $$("#nombreEditarCateg").val();
+	//icono e img
+	
+	colCateg.doc(idCategSelec).update
+	({nombre: nuevnombre})
+	
+	.then(function(){
+		console.log("Actualizado");
+	})
+	.catch(function (error){
+		
+		console.log("Error: " + error);
+	})
+	
+}
+
+function fnBorrarCateg(){
+	
+	app.dialog.confirm("Esta seguro que desea borrar la categoría? </br>Las recetas de esta categoría también serán borradas.", "Borrar Categoría", function(){
+		
+		colCateg.doc(idCategSelec).delete()
+		.then(function (){
+			app.dialog.alert("Categoría borrada","Borrar Categoría");
+			app.views.main.router.navigate("/principal/");
+	})
+	.catch(function (error){
+		console.log("Error");
+	});
+		
+		
+	});
+	
 }
