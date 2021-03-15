@@ -315,20 +315,21 @@ function mostrarCateg (){
 		querySnapshot.forEach(function(doc){
 			
 			nombres.push(doc.data().nombre);
+			console.log("Nombres: " + doc.data().nombre);
 			idcateg.push(doc.id);
 			
 		});
 		
+		
 		var k = 0;
 		largo = Math.ceil((nombres.length/2));
-
 		for(j=0; j<largo; j++){
 		agregar += "<div class='row'>";
 		
 		for(i=0; i<2 ; i++){
 			if(k < nombres.length){
 				
-				agregar += "<a id='"+idcateg[k]+"' href='/categElegida/' class='col-50 button button-large button-raised categs'>"+nombres[k]+"</a>";
+				agregar += "<a id='IDCATEG"+idcateg[k]+"' href='/categElegida/' class='col-50 button button-large button-raised categs'>"+nombres[k]+"</a>";
 				k++;
 				
 			}else {break;}
@@ -343,7 +344,7 @@ function mostrarCateg (){
 		
 	})
 	.catch(function (error){
-		console.log("Error");
+		console.log("Error: " +error);
 	});
 	
 	
@@ -366,7 +367,12 @@ function onErrorCamara(){
 function fnTomaridCateg(){
 	
 	idCategSelec = this.id;
+	console.log("ID: " +idCategSelec);
 	txtnombre = $$("#" + idCategSelec).text();
+	console.log("nombre: " + txtnombre);
+	idCategSelec = idCategSelec.replace("IDCATEG","");
+	console.log("ID: " +idCategSelec);
+	
 
 }
 
