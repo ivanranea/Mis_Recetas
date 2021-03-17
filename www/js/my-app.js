@@ -63,8 +63,9 @@ var app = new Framework7({
     // ... other parameters
   });
   
-var storage = window.localstorage;
+var storageLocal = window.localstorage;
 var db = firebase.firestore();
+
 var colCateg = db.collection("categorias");
 var colRecetas = db.collection("recetas");
 var colUsuarios = db.collection("usuarios");
@@ -75,8 +76,7 @@ var txtnombre = "";
 var emailUsuario = "ivan_ranea@hotmail.com";
 
 var maxCateg = 12;
-var idArray = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
-var lastID = "";
+
 
 var mainView = app.views.create('.view-main');
 
@@ -135,7 +135,10 @@ $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
 	$$("#btncrearCateg").on("click", fnCrearCateg);
-	$$("#imgNuevaCateg").on("click", fnGaleria);
+	
+	$$("#imgNuevaCateg").on("click", fnSubirImagen);
+	
+	fnBajarImagen();
 
 
 })
@@ -176,6 +179,36 @@ $$(document).on('page:init', '.page[data-name="categElegida"]', function (e) {
 
 	
 	$$("#btnborrarCateg").on("click", fnBorrarCateg);
+	
+	
+
+
+})
+
+$$(document).on('page:init', '.page[data-name="crearReceta"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	
+	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
+	var agregar = "";
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			var nombre = doc.data().nombre;
+			var id = doc.id;
+			console.log(nombre);
+			$$("#selectCateg").append("<option value='"+id+"'>"+nombre+"</option>");
+			
+		});
+		
+		$$("#btnAñadirIngrediente").on("click", fnAñadirIngrediente);
+		
+	})
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
 	
 	
 
@@ -271,7 +304,7 @@ function fnLogin(){ //Log in
 function fnCrearCateg(){
 	
 	var categRef = colCateg;
-	var query = categRef.where("Email", "==", emailUsuario);
+	var query = categRef.where("email", "==", emailUsuario);
 	cont = 0;
 	
 	query.get()
@@ -291,10 +324,11 @@ function fnCrearCateg(){
 		//iconoCateg = $$("#iconoNuevaCateg")    Tomar icono del pop up
 		//imgCateg = $$("#imgNuevaCateg")       subir imagen
 		
-		nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "Email" : emailUsuario};
-		
+		nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "email" : emailUsuario};
+		console.log("Categoría creada: ");
 		colCateg.add(nuevaCateg);
-		console.log("add crear categ");
+		app.views.main.router.navigate("/principal/");
+		
 		
 	})
 	.catch(function (error){
@@ -315,12 +349,14 @@ function mostrarCateg (){
 		querySnapshot.forEach(function(doc){
 			
 			nombres.push(doc.data().nombre);
-			console.log("Nombres: " + doc.data().nombre);
 			idcateg.push(doc.id);
 			
 		});
 		
+		/*var pathReference = storageImg.ref('imgs/pasta.jpg');*/
 		
+		
+
 		var k = 0;
 		largo = Math.ceil((nombres.length/2));
 		for(j=0; j<largo; j++){
@@ -412,3 +448,49 @@ function fnBorrarCateg(){
 	});
 	
 }
+
+
+
+function fnAñadirIngrediente(){
+	
+	$$("#listaIngredientes").append(`
+	
+	
+	
+	
+	`)
+	
+	
+	
+	
+}
+
+function fnSubirImagen(){
+	console.log("en funcion subir Imagen");
+	
+	var archivo = document.getElementById("foto").files[0];
+	var storage = firebase.storage();
+	var storageRef = storage.ref("imagenes/pasta");
+	
+	storageRef.put(archivo);
+	
+}
+
+function fnBajarImagen(){
+	
+	var storage = firebase.storage();
+	storage.refFromURL("gs://mis-recetas-d4106.appspot.com/imagenes/pastas").getDownloadURL()
+	.then(function(url) {
+		console.log("url: "+url);
+		$$("#fotosubida").attr("src", url);
+		
+	
+	}).catch(function(error) {
+		console.log("Error: "+error);
+	});
+}
+
+
+
+
+

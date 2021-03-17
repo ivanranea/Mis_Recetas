@@ -1,5 +1,5 @@
 <!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
-<div class="page" data-name="creaReceta">
+<div class="page" data-name="crearReceta">
     <div class="navbar">
         <div class="navbar-inner sliding">
         <div class="left">
@@ -23,43 +23,92 @@
 				</div>
 			</div>
 			</li>
+			
+			<li class="item-content item-input item-input-outline">
+			<div class="item-inner">
+				<div class="item-title item-floating-label">Categoría</div>
+				<div class="item-input-wrap input-dropdown-wrap">
+					<select id="selectCateg">
+					
+					
+					</select>
+				
+				</div>
+			</div>
+			</li>
 		</ul>
 		</div>
 		
-		<a id="iconoNuevaCateg" class="button popup-open" href="#" data-popup=".popup-icono">Icono</a>
+		<p>Ingredientes<p>
+		<div id="listaIngredientes">
 		
-		<a id="imgNuevaCateg" href="#" class="button button-large button-raised">Subir imagen</a>
+			<div class="row no-gap">
+				
+				<div class="list no-hairlines-md col">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-floating-label">Ingrediente</div>
+						<div class="item-input-wrap">
+						<input id="nombreIngrediente" type="text"/>
+						<span class="input-clear-button"></span>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+				
+				<div class="list no-hairlines-md col">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-floating-label">Cantidad</div>
+						<div class="item-input-wrap">
+						<input id="cantidad" type="text"/>
+						<span class="input-clear-button"></span>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+				<div class="list no-hairlines-md col">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-floating-label">Unidad</div>
+						<div class="item-input-wrap input-dropdown-wrap">
+							<select>
+								<option value="unidad">Unidad/es</option>
+								<option value="grs">grs</option>
+								<option value="kgs">kgs</option>
+								<option value="cc">cc</option>
+								<option value="mlts">mlts</option>
+								<option value="lts">lts</option>
+								<option value="taza">Taza</option>
+								<option value="cda">Cucharada/s</option>
+								<option value="cdita">Cucharadita/s</option>
+								<option value="vaso">Vaso/s</option>
+								<option value="cn">c/n</option>
+							</select>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<button id="btnAñadirIngrediente" class="button button-fill button-round">+ Añadir</button>
+		
+		<a id="imgNuevaReceta" href="#" class="button button-large button-raised">Subir imagen</a>
+		
+		<a id="btncrearReceta" href="#" class="button button-large button-raised">Crear</a>
 		
 		
-		
-		
-		
-		
-		<a id="btncrearCateg" href="#" class="button button-large button-raised">Crear</a>
-    </div>
-	
-	
-	<div class="popup popup-icono">
-    <div class="block">
-      <p>Seleccione un ícono</p>
-	  <div class="row">
-	  <a class="col-33 link popup-close" href="#">ICONO 1</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 2</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 3</a>
-	  </div>
-	  <div class="row">
-	  <a class="col-33 link popup-close" href="#">ICONO 4</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 5</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 6</a>
-	  </div>
-	  <div class="row">
-	  <a class="col-33 link popup-close" href="#">ICONO 7</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 8</a>
-	  <a class="col-33 link popup-close" href="#">ICONO 9</a>
-	  </div>
-      
-
-    </div>
-  </div>
+	</div>
 </div>
 
