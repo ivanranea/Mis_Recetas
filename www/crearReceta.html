@@ -42,64 +42,22 @@
 		<p>Ingredientes<p>
 		<div id="listaIngredientes">
 		
-			<div class="row no-gap">
-				
-				<div class="list no-hairlines-md col">
-					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Ingrediente</div>
-						<div class="item-input-wrap">
-						<input id="nombreIngrediente" type="text"/>
-						<span class="input-clear-button"></span>
-						</div>
-					</div>
-					</li>
-					</ul>
-				</div>
-				
-				
-				<div class="list no-hairlines-md col">
-					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Cantidad</div>
-						<div class="item-input-wrap">
-						<input id="cantidad" type="text"/>
-						<span class="input-clear-button"></span>
-						</div>
-					</div>
-					</li>
-					</ul>
-				</div>
-				
-				<div class="list no-hairlines-md col">
-					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Unidad</div>
-						<div class="item-input-wrap input-dropdown-wrap">
-							<select>
-								<option value="unidad">Unidad/es</option>
-								<option value="grs">grs</option>
-								<option value="kgs">kgs</option>
-								<option value="cc">cc</option>
-								<option value="mlts">mlts</option>
-								<option value="lts">lts</option>
-								<option value="taza">Taza</option>
-								<option value="cda">Cucharada/s</option>
-								<option value="cdita">Cucharadita/s</option>
-								<option value="vaso">Vaso/s</option>
-								<option value="cn">c/n</option>
-							</select>
-						</div>
-					</div>
-					</li>
-					</ul>
-				</div>
-				
-			</div>
+
 			
+		</div>
+		
+		<div class="list no-hairlines-md">
+		<ul>
+			<li class="item-content item-input item-input-outline">
+			<div class="item-inner">
+				<div class="item-title item-floating-label">Elaboración</div>
+				<div class="item-input-wrap">
+				<input id="elabReceta" type="text" required/>
+				<span class="input-clear-button"></span>
+				</div>
+			</div>
+			</li>
+		</ul>
 		</div>
 		
 		<button id="btnAñadirIngrediente" class="button button-fill button-round">+ Añadir</button>

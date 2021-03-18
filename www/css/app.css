@@ -118,3 +118,8 @@
 .width25{
 	width: 25%;
 }
+
+.nomargin{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
