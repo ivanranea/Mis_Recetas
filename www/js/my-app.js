@@ -59,6 +59,10 @@ var app = new Framework7({
         path: '/editarReceta/',
         url: 'editarReceta.html',
       },
+	  {
+        path: '/recetaElegida/',
+        url: 'recetaElegida.html',
+      },
     ]
     // ... other parameters
   });
@@ -71,6 +75,7 @@ var colRecetas = db.collection("recetas");
 var colUsuarios = db.collection("usuarios");
 
 var idCategSelec = "";
+var idRecetaSelec = "";
 var txtnombre = "";
 var contIngred = 0;
 const maxCateg = 12;
@@ -179,41 +184,21 @@ $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
 $$(document).on('page:init', '.page[data-name="categElegida"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
-	
+	fnMostrarRecetas();
 	$$("#btnborrarCateg").on("click", fnBorrarCateg);
-	
-	
-
-
 })
 
 $$(document).on('page:init', '.page[data-name="crearReceta"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
+	fnCreaciondeReceta();
 	
-	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
-	var agregar = "";
-	
-	query.get()
-	.then(function (querySnapshot){
-		querySnapshot.forEach(function(doc){
-			
-			var nombre = doc.data().nombre;
-			var id = doc.id;
-			$$("#selectCateg").append("<option value='"+id+"'>"+nombre+"</option>");
-			
-		});
-		
-		$$("#btnAñadirIngrediente").on("click", fnAñadirIngrediente);
-		$$("#btncrearReceta").on("click", fnCrearReceta);
-		
-	})
-	.catch(function (error){
-		console.log("Error: " +error);
-	});
-	
-	
+})
 
+$$(document).on('page:init', '.page[data-name="recetaElegida"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	fnRecetaElegida();
 
 })
 
@@ -301,7 +286,6 @@ function fnLogin(){ //Log in
 		}
 	});
 }
-
 
 function fnCrearCateg(){
 	
@@ -414,7 +398,6 @@ function fnTomaridCateg(){
 
 }
 
-
 function fnActualizarCategs(){
 	
 	var nuevnombre = $$("#nombreEditarCateg").val();
@@ -450,8 +433,6 @@ function fnBorrarCateg(){
 	});
 	
 }
-
-
 
 function fnAñadirIngrediente(){
 	
@@ -549,16 +530,13 @@ function fnBajarImagen(){
 
 function fnCrearReceta(){
 	
-	
-	
 	var arrayNombres = [];
 	
-	
-	recetasQuery = colRecetas.where("categoria", "==", idCategSelec).where("email", "==", emailUsuario);
+	recetasQuery = colRecetas.where("email", "==", emailUsuario);
 	
 	recetasQuery.get()
 	.then(function (querySnapshot){
-		querySnapshot.forEach(function(doc){
+		querySnapshot.forEach(function(doc){ //REVISAR, NO HACE NADA
 			
 			arrayNombres.push(doc.data().nombre);
 			
@@ -568,7 +546,6 @@ function fnCrearReceta(){
 		nombreReceta = $$("#nombreNuevaReceta").val();
 		elab = $$("#elabReceta").val();
 		categ = $$("#selectCateg").val();
-		console.log("Elab : "+elab);
 		
 		for(i=0; i<(arrayNombres.length); i++){
 			
@@ -578,13 +555,12 @@ function fnCrearReceta(){
 			}
 			
 		}
-		console.log("antes del query recetas");
+
 		var datosReceta = {nombre: nombreReceta, imagen: "url", elaboracion: elab, email: emailUsuario, categoria: categ};
 		colRecetas.add(datosReceta)
-		.then((docRef) => {
+		.then((doc) => {
 			
 			idReceta = doc.id;
-			console.log("id receta: "+idReceta);
 			
 			for(i=1; i<=contIngred; i++){
 			
@@ -592,12 +568,11 @@ function fnCrearReceta(){
 				cantidad = $$("#cantidad"+i).val();
 				unidad = $$("#unidad"+i).val();
 				
-				datosIngrediente = { nombre: nombre , cantidad : cantidad, unidadmedicion: unidad, receta : nombreReceta};
-				console.log("Se agregará en la receta "+nombreReceta+":");
+				datosIngrediente = { nombre: nombre , cantidad : cantidad, unidadmedida: unidad, receta : nombreReceta};
 				
 				colRecetas.doc(idReceta).collection("ingredientes").add(datosIngrediente)
-				.then((docRef) => {
-					console.log("Ingrediente: "+nombre+" | Cantidad: "+cantidad+" "+unidadmedicion);
+				.then((doc) => {
+					
 				})
 				.catch((error) => {
 			
@@ -615,20 +590,105 @@ function fnCrearReceta(){
 	.catch(function (error){
 	console.log("Error: " +error);
 	});
+}
+
+function fnCreaciondeReceta(){
 	
+	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
+	var agregar = "";
 	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			var nombre = doc.data().nombre;
+			var id = doc.id;
+			$$("#selectCateg").append("<option value='"+id+"'>"+nombre+"</option>");
+			
+		});
+		
+		$$("#btnAñadirIngrediente").on("click", fnAñadirIngrediente);
+		$$("#btncrearReceta").on("click", fnCrearReceta);
+		
+	})
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
+}
+
+function fnMostrarRecetas(){
+
+	var queryRecetas = colRecetas.where("categoria", "==", idCategSelec).where("email", "==", emailUsuario);
+	queryRecetas.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			$$("#contenedorRecetas").append(`
+			<a id="`+doc.data().nombre+`" href="/recetaElegida/" class="button contenedorImg linkReceta">
+			`+doc.data().nombre+`
+			
+			</a>
+			`);
+			//<img src="img/pizza.jpg" class="crop"> <p class="centerTextimg">`+doc.data().nombre+`</p>
+		});
+		
+		$$(".linkReceta").on("click", fnTomarIdReceta);
+		
+	})
+	.catch(function (error){
+	console.log("Error: " +error);
+	});
+
+}
+
+function fnRecetaElegida(){
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	var nombreReceta = idRecetaSelec;
+	var nombre = "";
+	var elab = "";
+	var docID = "";
+	var query = colRecetas.where("nombre", "==", nombreReceta).where("email", "==", emailUsuario);
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			nombre = doc.data().nombre;
+			elab = doc.data().elaboracion;
+			docID = doc.id;
+			
+		});
+		
+		$$("#NombreReceta").text(nombre);
+		$$("#elabReceta").text(elab);
+		
+		colRecetas.doc(docID).collection("ingredientes").get()
+		.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			$$("#IngredientesReceta").append(`
+				<div class="row">
+				<p class="col-50">`+doc.data().nombre+`</p>
+				<p class="col-25">`+doc.data().cantidad+`</p>
+				<p class="col-25">`+doc.data().unidadmedida+`</p>
+				</div>
+			`);
+		});
+		
+		})
+		.catch(function (error){
+			console.log("Error: " +error);
+		});
+		
+	})
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
+
 	
 }
 
+function fnTomarIdReceta(){
 
+	idRecetaSelec = this.id;
 
+}
