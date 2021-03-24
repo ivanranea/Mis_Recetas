@@ -79,6 +79,9 @@ var idRecetaSelec = "";
 var txtnombre = "";
 var contIngred = 0;
 const maxCateg = 12;
+var IDingredientes = [];
+var recetaId = "";
+var nuevoIngredienteUpdate = 0;
 
 const emailUsuario = "ivan_ranea@hotmail.com";
 
@@ -153,7 +156,6 @@ $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
 $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
-	console.log("Nombre categoría: " + txtnombre);
 	var ids = [];
 	var query = colCateg.where("email", "==", emailUsuario).where("nombre", "==", txtnombre);
 	
@@ -202,12 +204,20 @@ $$(document).on('page:init', '.page[data-name="recetaElegida"]', function (e) {
 
 })
 
+$$(document).on('page:init', '.page[data-name="editarReceta"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	fnrellenarEditReceta();
+	$$("#btnactualizarReceta").on("click", fnActualizarReceta);
+
+})
+
 function fnRegistrarUsuario(){
 	
 	nombre = $$("#nombRegistro").val();
 	email = $$("#emailRegistro").val();
 	password = $$("#passRegistro").val();
-	console.log("nombre: "+ nombre +", email: "+email+", pass: "+ password);
+	
 	
 	firebase.auth().createUserWithEmailAndPassword(email, password) //Registro de usuario
 	.then(function (){
@@ -300,7 +310,7 @@ function fnCrearCateg(){
 			
 		});
 		
-		console.log("cont :" + cont);
+		
 		if(cont >= maxCateg){
 			app.dialog.alert("Limite de categorías alcanzado");
 			return;
@@ -311,7 +321,6 @@ function fnCrearCateg(){
 		//imgCateg = $$("#imgNuevaCateg")       subir imagen
 		
 		nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "email" : emailUsuario};
-		console.log("Categoría creada: ");
 		colCateg.add(nuevaCateg);
 		app.views.main.router.navigate("/principal/");
 		
@@ -389,13 +398,8 @@ function onErrorCamara(){
 function fnTomaridCateg(){
 	
 	idCategSelec = this.id;
-	console.log("ID: " +idCategSelec);
 	txtnombre = $$("#" + idCategSelec).text();
-	console.log("nombre: " + txtnombre);
 	idCategSelec = idCategSelec.replace("IDCATEG","");
-	console.log("ID: " +idCategSelec);
-	
-
 }
 
 function fnActualizarCategs(){
@@ -580,6 +584,7 @@ function fnCrearReceta(){
 				});
 				
 				}
+				contIngred = 0;
 		})
 		.catch((error) => {
 			
@@ -691,4 +696,246 @@ function fnTomarIdReceta(){
 
 	idRecetaSelec = this.id;
 
+}
+
+function fnrellenarEditReceta(){
+	
+	nombreReceta = idRecetaSelec;
+	var elab = "";
+	
+	var query = colRecetas.where("nombre", "==", nombreReceta).where("email", "==", emailUsuario);
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			recetaId = doc.id;
+			elab = doc.data().elaboracion;
+			});
+			
+			$$("#nombreEditarReceta").val(nombreReceta);
+			$$("#editarElabReceta").val(elab);
+			
+			
+			colRecetas.doc(recetaId).collection("ingredientes").get()
+			.then(function (querySnapshot){
+				querySnapshot.forEach(function(doc){
+					
+					IDingredientes.push(doc.id);
+					contIngred++;
+
+					$$("#ingredientesAeditar").append(`
+					
+					<div class="row no-gap">
+						
+						<div class="list no-hairlines-md col nomargin">
+							<ul>
+							<li class="item-content item-input item-input-outline">
+							<div class="item-inner">
+								<div class="item-title item-label">Ingrediente</div>
+								<div class="item-input-wrap">
+								<input id="nombreIngEdit`+contIngred+`" type="text" autocomplete="off"/>
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+							</li>
+							</ul>
+						</div>
+						
+						
+						<div class="list no-hairlines-md col nomargin">
+							<ul>
+							<li class="item-content item-input item-input-outline">
+							<div class="item-inner">
+								<div class="item-title item-label">Cantidad</div>
+								<div class="item-input-wrap">
+								<input id="cantidadEdit`+contIngred+`" type="text" autocomplete="off"/>
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+							</li>
+							</ul>
+						</div>
+						
+						<div class="list no-hairlines-md col nomargin">
+							<ul>
+							<li class="item-content item-input item-input-outline">
+							<div class="item-inner">
+								<div class="item-title item-label">Unidad</div>
+								<div class="item-input-wrap input-dropdown-wrap">
+									<select id="unidadEdit`+contIngred+`" autocomplete="off">
+										<option value="unidad">Unidad/es</option>
+										<option value="grs">grs</option>
+										<option value="kgs">kgs</option>
+										<option value="cc">cc</option>
+										<option value="mlts">mlts</option>
+										<option value="lts">lts</option>
+										<option value="taza">Taza</option>
+										<option value="cda">Cucharada/s</option>
+										<option value="cdita">Cucharadita/s</option>
+										<option value="vaso">Vaso/s</option>
+										<option value="cn">c/n</option>
+									</select>
+								</div>
+							</div>
+							</li>
+							</ul>
+						</div>
+						
+					</div>
+			
+			
+					`)
+					
+					$$("#nombreIngEdit"+contIngred).val(doc.data().nombre);
+					$$("#cantidadEdit"+contIngred).val(doc.data().cantidad);
+					$$("#unidadEdit"+contIngred).val(doc.data().unidadmedida);
+					
+				});
+				
+			$$("#btnAñadirIngredienteEdit").on("click", fnAñadirIngredienteEdit);
+			
+			})
+		
+		
+		
+		
+		
+	})
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
+	
+	
+}
+
+function fnAñadirIngredienteEdit(){
+	
+	contIngred++;
+	nuevoIngredienteUpdate++;
+	$$("#ingredientesAeditar").append(`
+	
+			<div class="row no-gap">
+				
+				<div class="list no-hairlines-md col nomargin">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-label">Ingrediente</div>
+						<div class="item-input-wrap">
+						<input id="nombreIngEdit`+contIngred+`" type="text"/>
+						<span class="input-clear-button"></span>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+				
+				<div class="list no-hairlines-md col nomargin">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-label">Cantidad</div>
+						<div class="item-input-wrap">
+						<input id="cantidadEdit`+contIngred+`" type="text"/>
+						<span class="input-clear-button"></span>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+				<div class="list no-hairlines-md col nomargin">
+					<ul>
+					<li class="item-content item-input item-input-outline">
+					<div class="item-inner">
+						<div class="item-title item-label">Unidad</div>
+						<div class="item-input-wrap input-dropdown-wrap">
+							<select id="unidadEdit`+contIngred+`">
+								<option value="unidad">Unidad/es</option>
+								<option value="grs">grs</option>
+								<option value="kgs">kgs</option>
+								<option value="cc">cc</option>
+								<option value="mlts">mlts</option>
+								<option value="lts">lts</option>
+								<option value="taza">Taza</option>
+								<option value="cda">Cucharada/s</option>
+								<option value="cdita">Cucharadita/s</option>
+								<option value="vaso">Vaso/s</option>
+								<option value="cn">c/n</option>
+							</select>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+			</div>
+	`)
+}
+
+function fnActualizarReceta(){
+	var i = 0;
+	var nuevnombre = $$("#nombreEditarReceta").val();
+	var nuevelab = $$("#editarElabReceta").val();
+	var j = 0;
+	colRecetas.doc(recetaId).update
+	({nombre: nuevnombre, elaboracion: nuevelab})
+	.then(function(){
+		console.log("Update Nombre y elab OK");
+		console.log("contIngred: "+contIngred);
+		contIngred -= nuevoIngredienteUpdate;
+		for(i=1; i<=contIngred; i++, j++){
+			
+			nomb = $$("#nombreIngEdit"+i).val();
+			cant = $$("#cantidadEdit"+i).val();
+			unid = $$("#unidadEdit"+i).val();
+			
+			console.log("Nombre: "+nomb+" | Cantidad: "+cant+" | Unidad: "+unid);
+			console.log("Id Ingrediente: "+IDingredientes[j]);
+			
+			colRecetas.doc(idRecetaSelec).collection("ingredientes").doc(IDingredientes[j]).update
+			({nombre: nomb, cantidad: cant, unidadmedida: unid, receta: nuevnombre})
+			.then(function(){
+				console.log("Actualizado");
+				
+			})
+			.catch(function (error){
+	
+				console.log("Error: " + error);
+			})
+		}
+		
+		if(nuevoIngredienteUpdate > 0){
+			for(i; i<nuevoIngredienteUpdate; i++){
+				
+				nomb = $$("#nombreIngEdit"+i).val();
+				cant = $$("#cantidadEdit"+i).val();
+				unid = $$("#unidadEdit"+i).val();
+				
+				console.log("Nuevo ingrediente:");
+				console.log("Nombre: "+nomb+" | Cantidad: "+cant+" | Unidad: "+unid);
+				
+				datosIngrediente = { nombre: nomb , cantidad : cant, unidadmedida: uni, receta : nuevnombre};
+				
+				colRecetas.doc(idRecetaSelec).collection("ingredientes").add(datosIngrediente)
+				.then((doc) => {
+					console.log("Ingrediente agregado en update");
+				})
+				.catch((error) => {
+			
+					console.error("Error: " +error);
+				});
+				
+			}
+		
+		}
+		contIngred = 0;
+	})
+	.catch(function (error){
+				
+		console.log("Error: " + error);
+	})
+	
+	
 }
