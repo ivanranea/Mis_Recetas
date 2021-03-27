@@ -10,24 +10,24 @@
         <div class="title">Crea una Receta</div>
         </div>
     </div>
-    <div class="page-content">
+    <div class="page-content fondoClaro">
+	<div class="block">
 
 		<div class="list no-hairlines-md">
 		<ul>
-			<li class="item-content item-input item-input-outline">
+			<li class="item-content item-input item-input-outline fondoClaro">
 			<div class="item-inner">
-				<div class="item-title item-floating-label">Nombre</div>
-				<div class="item-input-wrap">
-				<input id="nombreNuevaReceta" type="text" placeholder="Nombre de la receta" required/>
-				<span class="input-clear-button"></span>
+				<div class="item-title item-label">Nombre</div>
+				<div class="item-input-wrap fondoInput">
+				<input id="nombreNuevaReceta" type="text" placeholder="Nombre de la receta" autocomplete="off" required/>
 				</div>
 			</div>
 			</li>
 			
-			<li class="item-content item-input item-input-outline">
+			<li class="item-content item-input item-input-outline fondoClaro">
 			<div class="item-inner">
-				<div class="item-title item-floating-label">Categoría</div>
-				<div class="item-input-wrap input-dropdown-wrap">
+				<div class="item-title item-label">Categoría</div>
+				<div class="item-input-wrap input-dropdown-wrap fondoInput">
 					<select id="selectCateg">
 					
 					
@@ -39,34 +39,45 @@
 		</ul>
 		</div>
 		
-		<p>Ingredientes<p>
+		<p class="tituloIngredientes">Ingredientes</p>
 		<div id="listaIngredientes">
 		
 
 			
 		</div>
 		
-		<button id="btnAñadirIngrediente" class="button button-fill button-round">+ Añadir</button>
+		<div class="paddingLR40 paddingT20"><button id="btnAñadirIngrediente" class="button button-fill button-round colorbtnrojo"><p class="mas">+</p>Añadir</button></div>
 		
 		<div class="list no-hairlines-md">
 		<ul>
-			<li class="item-content item-input item-input-outline">
+			<li class="item-content item-input item-input-outline fondoClaro">
 			<div class="item-inner">
-				<div class="item-title item-floating-label">Elaboración</div>
-				<div class="item-input-wrap">
-				<input id="elabReceta" type="text" required/>
-				<span class="input-clear-button"></span>
+				<div class="item-title item-label">Elaboración</div>
+				<div class="item-input-wrap fondoInput">
+				<textarea id="elabReceta" required/></textarea>
 				</div>
 			</div>
 			</li>
 		</ul>
 		</div>
 		
-		<a id="imgNuevaReceta" href="#" class="button button-large button-raised">Subir imagen</a>
+		<!--
+		<ul>
+		<li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-input-wrap">
+                <input id="foto" type="file"/>
+              </div>
+            </div>
+         </li>
+		 </ul>
+        -->
 		
-		<a id="btncrearReceta" href="#" class="button button-large button-raised">Crear</a>
+		<div class="paddinTB20"><a id="imgNuevaReceta" href="#" class="button button-raised button-fill button-round colorbtnrojo">Subir imagen</a></div>
 		
+		<div class="paddinTB20"><a id="btncrearReceta" href="#" class="button button-large button-raised button-fill button-round colorbtnrojo">Crear</a></div>
 		
+	</div>
 	</div>
 </div>
 

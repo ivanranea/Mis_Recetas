@@ -31,6 +31,8 @@
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/framework7-icons.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -40,58 +42,57 @@
     
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-       
-            <!-- Top Navbar -->
-            <div class="navbar">
-                <div class="navbar-bg"></div>
-                <div class="navbar-inner">
-                    <div class="left"><i class="icon icon-back"></i></div>
-                    <div class="title">Page Title</div>
-                    <div class="right"><i class="f7-icons">ellipsis_vertical</i></div>
-                </div>
+      
+		<div id="upperNavbar" class="navbar">
+		<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding colorbtnrojo">
+                <div id="IconoBack" class="left"><i class="icon icon-back"></i></div>
+                <div class="title width260"><p id="titulonavbar" class="txtcenter"></p></div>
             </div>
-    
+		</div>
+		
             <!-- Toolbar -->
-            <div class="toolbar toolbar-bottom">
-                <div class="toolbar-inner">
+            <div id="toolbarInferior" class="toolbar toolbar-bottom">
+                <div class="toolbar-inner colorbtnverde">
                 <!-- Toolbar links -->
-                <a href="/principal/" class="link">Inicio</a>
-                <a href="/buscador/" class="link">Buscar</a>
-				<a href="/favoritos/" class="link">Favoritos</a>
-				<a href="/perfil/" class="link">Perfil</a>
+                <a href="/principal/" class="link"><p class="blanco">Inicio</p></a>
+                <a href="/buscador/" class="link"><p class="blanco">Buscar</p></a>
+				<a href="/favoritos/" class="link"><p class="blanco">Favoritos</p></a>
+				<a href="/perfil/" class="link"><p class="blanco">Perfil</p></a>
                 </div>
             </div>
         
         <!-- Initial Page, "data-name" contains page name -->
             <div data-name="index" class="page">
                 <!-- Scrollable page content -->
-                <div class="page-content">
-                    <div class="block">
-                    <div class="list no-hairlines-md">
+                <div class="page-content fondoClaro">
+                    <div class="block marginTopBot0">
+					
+					<img src="img/logo.png" class="tamañoLogo">
+					
+                    <div class="list no-hairlines-md fondoClaro">
 					<ul>
-						<li class="item-content item-input item-input-outline">
-						<div class="item-inner">
-							<div class="item-title item-floating-label">E-mail</div>
-							<div class="item-input-wrap">
-							<input id="emailLogin" type="email" value="ivan_ranea@hotmail.com" placeholder="Ingresa tu E-mail" required validate/>
-							<span class="input-clear-button"></span>
-							<div id="emailInfo"class="item-input-info"></div>
+						<li class="item-content item-input item-input-outline fondoClaro">
+						<div class="item-inner fondoClaro">
+							<div class="item-title item-label">E-mail</div>
+							<div class="item-input-wrap fondoInput">
+							<input id="emailLogin" type="email" value="ivan_ranea@hotmail.com" required validate/>
+							<div id="emailInfo"class="item-input-info fondoClaro"></div>
 							</div>
 						</div>
 						</li>
-						<li class="item-content item-input item-input-outline">
+						<li class="item-content item-input item-input-outline fondoClaro paddingB10">
 						<div class="item-inner">
-							<div class="item-title item-floating-label">Contraseña</div>
-							<div class="item-input-wrap">
-							<input id="passLogin" type="password" value="alphonse01" placeholder="Ingresa tu Contraseña" required validate/>
-							<span class="input-clear-button"></span>
-							<div id="passInfo"class="item-input-info">Mínimo de 6 carácteres</div>
+							<div class="item-title item-label">Contraseña</div>
+							<div class="item-input-wrap fondoInput">
+							<input id="passLogin" type="password" value="alphonse01" required validate/>
+							<div id="passInfo"class="item-input-info fondoClaro">Mínimo de 6 carácteres</div>
 							</div>
 						</div>
 						</li>
 						
-						<li>
-						<label class="item-checkbox item-content">
+						<li class="fondoClaro">
+						<label class="item-checkbox item-content fondoClaro">
 							<!-- Checkbox input -->
 							<input id="recordarUsuario" type="checkbox"/>
 							<!-- Checkbox icon -->
@@ -105,9 +106,9 @@
 					</ul>
                     </div>
 					
-					<div class="row">
-					<a id="btnlogin" class="col button button-raised button-fill button-round">Ingresar</a>
-					<a href="/registro/" class="col button button-raised button-fill button-round">Registrarme</a>
+					<div class="row paddingT30">
+					<a id="btnlogin" class="col button button-raised button-fill button-round colorbtnrojo">Ingresar</a>
+					<a href="/registro/" class="col button button-raised button-fill button-round colorbtnrojo">Registrarme</a>
 					</div>
 					
 					</div>

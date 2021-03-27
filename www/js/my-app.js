@@ -124,7 +124,8 @@ $$(document).on('page:init', '.page[data-name="registro"]', function (e) {
 $$(document).on('page:init', '.page[data-name="index"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
-	
+	$$("#upperNavbar").addClass("oculto");
+	$$("#toolbarInferior").addClass("oculto");
 	$$("#btnlogin").on("click", fnLogin);
 	
 	
@@ -136,6 +137,10 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
+	$$("#toolbarInferior").removeClass("oculto");
+	$$("#IconoBack").addClass("oculto");
+	$$("#upperNavbar").removeClass("oculto");
+	$$("#titulonavbar").text("Categorías");
 	mostrarCateg();
 	
 	
@@ -143,10 +148,12 @@ $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-
-	$$("#btncrearCateg").on("click", fnCrearCateg);
 	
+	fnNavbarVisible();
+	$$("#titulonavbar").text("Crea una Categoría");
+	$$("#btncrearCateg").on("click", fnCrearCateg);
 	$$("#imgNuevaCateg").on("click", fnSubirImagen);
+	$$(".popIcono").on("click", fnCambiarIcono);
 	
 	fnBajarImagen();
 
@@ -157,6 +164,7 @@ $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
 	var ids = [];
+	var idicono =  "";
 	var query = colCateg.where("email", "==", emailUsuario).where("nombre", "==", txtnombre);
 	
 	query.get()
@@ -164,7 +172,7 @@ $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
 		querySnapshot.forEach(function(doc){
 			
 			ids.push(doc.id);
-			
+			idicono = doc.data().icono;
 		});
 		
 		for(i=0; i<(ids.length); i++){
@@ -174,8 +182,10 @@ $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
 			}
 		}
 		
-		$$("#btnactualizarCateg").on("click", fnActualizarCategs);
+		$$("#IconoEditarCateg").attr("src", idicono);
 		
+		$$("#btnactualizarCateg").on("click", fnActualizarCategs);
+		$$(".popIconoEdit").on("click", fnEditarIcono);
 	})
 	.catch(function (error){
 		console.log("Error");
@@ -192,7 +202,8 @@ $$(document).on('page:init', '.page[data-name="categElegida"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="crearReceta"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-
+	
+	$$("#titulonavbar").text("Crea tu Receta");
 	fnCreaciondeReceta();
 	
 })
@@ -317,10 +328,10 @@ function fnCrearCateg(){
 		}
 		
 		nombreCateg = $$("#nombreNuevaCateg").val();
-		//iconoCateg = $$("#iconoNuevaCateg")    Tomar icono del pop up
+		iconoCateg = $$("#IconoCrearCateg").attr("src");
 		//imgCateg = $$("#imgNuevaCateg")       subir imagen
 		
-		nuevaCateg = {"nombre" : nombreCateg, "icono" : "icono1", "imagen" : "img1", "email" : emailUsuario};
+		nuevaCateg = {"nombre" : nombreCateg, "icono" : iconoCateg, "imagen" : "img1", "email" : emailUsuario};
 		colCateg.add(nuevaCateg);
 		app.views.main.router.navigate("/principal/");
 		
@@ -336,6 +347,7 @@ function mostrarCateg (){
 	
 	var nombres = [];
 	var idcateg = [];
+	var idicono = [];
 	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
 	var agregar = "";
 	
@@ -345,6 +357,7 @@ function mostrarCateg (){
 			
 			nombres.push(doc.data().nombre);
 			idcateg.push(doc.id);
+			idicono.push(doc.data().icono);
 			
 		});
 		
@@ -355,12 +368,12 @@ function mostrarCateg (){
 		var k = 0;
 		largo = Math.ceil((nombres.length/2));
 		for(j=0; j<largo; j++){
-		agregar += "<div class='row'>";
+		agregar += "<div class='row paddingB10'>";
 		
 		for(i=0; i<2 ; i++){
 			if(k < nombres.length){
 				
-				agregar += "<a id='IDCATEG"+idcateg[k]+"' href='/categElegida/' class='col-50 button button-large button-raised categs'>"+nombres[k]+"</a>";
+				agregar += "<div class='col-50 heightbtnCateg'><a id='IDCATEG"+idcateg[k]+"' href='/categElegida/' class='button button-large button-raised categs heightbtnCateg colorbtnverde'><img src='"+idicono[k]+"' class='paddingB20'><p class='categtxt'>"+nombres[k]+"</p></a></div>";
 				k++;
 				
 			}else {break;}
@@ -405,10 +418,10 @@ function fnTomaridCateg(){
 function fnActualizarCategs(){
 	
 	var nuevnombre = $$("#nombreEditarCateg").val();
-	//icono e img
+	var nuevicono = $$("#IconoEditarCateg").attr("src");
 	
 	colCateg.doc(idCategSelec).update
-	({nombre: nuevnombre})
+	({nombre: nuevnombre, icono: nuevicono})
 	
 	.then(function(){
 		console.log("Actualizado");
@@ -446,14 +459,13 @@ function fnAñadirIngrediente(){
 	
 			<div class="row no-gap">
 				
-				<div class="list no-hairlines-md col nomargin">
+				<div class="list no-hairlines-md col-50 nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Ingrediente</div>
-						<div class="item-input-wrap">
-						<input id="nombreIng`+contIngred+`" type="text"/>
-						<span class="input-clear-button"></span>
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro">
+						<div class="item-title item-label">Ingrediente</div>
+						<div class="item-input-wrap fondoInput">
+						<input id="nombreIng`+contIngred+`" type="text" autocomplete="off"/>
 						</div>
 					</div>
 					</li>
@@ -461,26 +473,25 @@ function fnAñadirIngrediente(){
 				</div>
 				
 				
-				<div class="list no-hairlines-md col nomargin">
+				<div class="list no-hairlines-md col-25 nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Cantidad</div>
-						<div class="item-input-wrap">
-						<input id="cantidad`+contIngred+`" type="text"/>
-						<span class="input-clear-button"></span>
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro">
+						<div class="item-title item-label">Cant.</div>
+						<div class="item-input-wrap fondoInput">
+						<input id="cantidad`+contIngred+`" type="text" autocomplete="off"/>
 						</div>
 					</div>
 					</li>
 					</ul>
 				</div>
 				
-				<div class="list no-hairlines-md col nomargin">
+				<div class="list no-hairlines-md col-25 nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
-						<div class="item-title item-floating-label">Unidad</div>
-						<div class="item-input-wrap input-dropdown-wrap">
+					<li class="item-content item-input item-input-outline fondoClaro paddingL0">
+					<div class="item-inner fondoClaro">
+						<div class="item-title item-label">Unid.</div>
+						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidad`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
 								<option value="grs">grs</option>
@@ -818,10 +829,10 @@ function fnAñadirIngredienteEdit(){
 				
 				<div class="list no-hairlines-md col nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro">
 						<div class="item-title item-label">Ingrediente</div>
-						<div class="item-input-wrap">
+						<div class="item-input-wrap fondoInput">
 						<input id="nombreIngEdit`+contIngred+`" type="text"/>
 						<span class="input-clear-button"></span>
 						</div>
@@ -833,10 +844,10 @@ function fnAñadirIngredienteEdit(){
 				
 				<div class="list no-hairlines-md col nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro">
 						<div class="item-title item-label">Cantidad</div>
-						<div class="item-input-wrap">
+						<div class="item-input-wrap fondoInput">
 						<input id="cantidadEdit`+contIngred+`" type="text"/>
 						<span class="input-clear-button"></span>
 						</div>
@@ -847,10 +858,10 @@ function fnAñadirIngredienteEdit(){
 				
 				<div class="list no-hairlines-md col nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline">
-					<div class="item-inner">
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro">
 						<div class="item-title item-label">Unidad</div>
-						<div class="item-input-wrap input-dropdown-wrap">
+						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidadEdit`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
 								<option value="grs">grs</option>
@@ -875,6 +886,7 @@ function fnAñadirIngredienteEdit(){
 }
 
 function fnActualizarReceta(){
+	
 	var i = 0;
 	var nuevnombre = $$("#nombreEditarReceta").val();
 	var nuevelab = $$("#editarElabReceta").val();
@@ -939,3 +951,54 @@ function fnActualizarReceta(){
 	
 	
 }
+
+function fnCambiarIcono(){
+	
+	var id = this.id
+	$$("#IconoCrearCateg").attr("src", id);
+	
+	
+}
+
+function fnEditarIcono(){
+	
+	var id = this.id
+	id = id.replace("edit","");
+	$$("#IconoEditarCateg").attr("src", id);
+}
+
+function fnNavbarOculto(){
+	
+	if(($$("#upperNavbar").hasClass("visible"))==true){
+		$$("#upperNavbar").removeClass("visible");
+		$$("#upperNavbar").addClass("oculto");
+	}
+	
+}
+
+function fnNavbarVisible(){
+	
+	if(($$("#upperNavbar").hasClass("oculto"))==true){
+		$$("#upperNavbar").removeClass("oculto");
+		$$("#upperNavbar").addClass("visible");
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

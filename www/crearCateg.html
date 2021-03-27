@@ -10,75 +10,64 @@
         <div class="title">Crea una Categoría</div>
         </div>
     </div>
-    <div class="page-content">
+    <div class="page-content fondoClaro">
+	<div class="block">
 
 		<div class="list no-hairlines-md">
 		<ul>
-			<li class="item-content item-input item-input-outline">
-			<div class="item-inner">
-				<div class="item-title item-floating-label">Nombre</div>
-				<div class="item-input-wrap">
-				<input id="nombreNuevaCateg" type="text" placeholder="Nombre de la categoría" required/>
-				<span class="input-clear-button"></span>
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner fondoClaro">
+				<div class="item-title item-label">Nombre</div>
+				<div class="item-input-wrap fondoInput">
+				<input id="nombreNuevaCateg" type="text" placeholder="Nombre de la categoría" autocomplete="off" required/>
 				</div>
 			</div>
 			</li>
 		</ul>
 		</div>
 		
-		<a id="iconoNuevaCateg" class="button popup-open" href="#" data-popup=".popup-icono">Icono</a>
-		
-		<a id="imgNuevaCateg" href="#" class="button button-large button-raised">Subir imagen</a>
-		
-		<ul>
-		<li class="item-content item-input item-input-with-info">
-            <div class="item-inner">
-              <div class="item-input-wrap">
-                <input id="foto" type="file" placeholder="Elegir icono" />
-                <span class="input-clear-button"></span>
-                <div class="item-input-info">Elegir imagen...</div>
-              </div>
-            </div>
-         </li>
-		 </ul>
-        <img src="" id="fotosubida" width="100%">
+		<div class="row">
+		<div class="col-50 paddingT15 paddingMarginLeft10"><a id="btnIconoNuevaCateg" class="button popup-open colorbtnverde" href="#" data-popup=".popup-icono">Icono</a></div>
+		<div class="col-50"><img id="IconoCrearCateg" src="img/CategIcons/icon01.png" class="sizeIcono paddingleft50"></div>
+		</div>
      
-		<a id="btncrearCateg" href="#" class="button button-large button-raised">Crear</a>
+		<div class="paddingT40"><a id="btncrearCateg" href="#" class="button button-large button-raised button-round colorbtnrojo">Crear</a></div>
     </div>
+	</div>
 	
 	
 	<div class="popup popup-icono">
     <div class="block">
       <p>Seleccione un ícono</p>
 	  <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon01.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon02.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon03.png"></a>
+	  <a id="img/CategIcons/icon01.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon01.png"></a>
+	  <a id="img/CategIcons/icon02.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon02.png"></a>
+	  <a id="img/CategIcons/icon03.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon03.png"></a>
 	  </div>
 	  <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon04.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon05.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon06.png"></a>
+	  <a id="img/CategIcons/icon04.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon04.png"></a>
+	  <a id="img/CategIcons/icon05.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon05.png"></a>
+	  <a id="img/CategIcons/icon06.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon06.png"></a>
 	  </div>
 	  <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon07.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon08.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon09.png"></a>
+	  <a id="img/CategIcons/icon07.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon07.png"></a>
+	  <a id="img/CategIcons/icon08.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon08.png"></a>
+	  <a id="img/CategIcons/icon09.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon09.png"></a>
 	  </div>
 	  <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon10.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon11.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon12.png"></a>
+	  <a id="img/CategIcons/icon10.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon10.png"></a>
+	  <a id="img/CategIcons/icon11.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon11.png"></a>
+	  <a id="img/CategIcons/icon12.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon12.png"></a>
 	  </div>
       <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon13.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon14.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon15.png"></a>
+	  <a id="img/CategIcons/icon13.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon13.png"></a>
+	  <a id="img/CategIcons/icon14.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon14.png"></a>
+	  <a id="img/CategIcons/icon15.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon15.png"></a>
 	  </div>
 	  <div class="row">
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon16.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon17.png"></a>
-	  <a class="col-33 link popup-close" href="#"><img src="img/CategIcons/icon18.png"></a>
+	  <a id="img/CategIcons/icon16.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon16.png"></a>
+	  <a id="img/CategIcons/icon17.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon17.png"></a>
+	  <a id="img/CategIcons/icon18.png" class="col-33 link popup-close popIcono" href="#"><img src="img/CategIcons/icon18.png"></a>
 	  </div>
 
     </div>

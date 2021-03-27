@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8acd682e-fc3a-4f6c-a59f-17d17397fd8f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/crearCateg.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/crearCateg.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/crearReceta.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/crearReceta.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/editarReceta.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/editarReceta.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/img/CategIcons/framework7-icons-master.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/www/js/my-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/my-app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/principal.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/principal.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +27,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -38,5 +43,23 @@
       <updated>1615927899640</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="429" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616702111326">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="429" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1616702111326" />
+    <state x="655" y="266" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1616705867342">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="655" y="266" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1616705867342" />
+    <state x="248" y="117" width="1200" height="800" key="AVDManager" timestamp="1616708577056">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="248" y="117" width="1200" height="800" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1616708577056" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1616706772294">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1616706772294" />
   </component>
 </project>

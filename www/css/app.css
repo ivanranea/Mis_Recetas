@@ -78,7 +78,7 @@
        url('../fonts/poppins-v13-latin-900italic.svg#Poppins') format('svg'); /* Legacy iOS */
 }
 
-
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;800&display=swap');
 
 * {
 	font-family: 'Poppins', Arial, sans-serif;
@@ -111,8 +111,9 @@
 	
 }
 
-.width50{
-	width: 50%;
+.width260{
+	width: 260px;
+	text-align: center;
 }
 
 .width25{
@@ -123,3 +124,174 @@
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+
+.noPadLeft{
+	padding-right: 0px;
+}
+
+fondoIcono{
+	background-image: black;
+}
+
+.sizeIcono{
+	height: 64px;
+	width: 64px;
+}
+
+.paddingleft50{
+	padding-left: 50px;
+}
+
+
+
+.paddingMarginLeft10{
+	padding-left: 10px;
+	margin-left: 10px;
+}
+
+.colorbtnrojo{
+	background-color: #ff9b71;
+	color: white;
+	font-family: 'Raleway', sans-serif;
+}
+
+.colorbtnverde{
+	background-color: #96cf8f;
+	color: white;
+	font-family: 'Raleway', sans-serif;
+}
+
+
+.fondoClaro{
+	background-color: #f4f1de;
+}
+
+.tamañoLogo{
+	height: 190px;
+	width: 142px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.margintop10{
+	margin-top: 10px;
+}
+
+.oculto{
+	display: none;
+	visibility: hidden;
+}
+
+.visible{
+	visibility: visible;
+}
+
+.marginTopBot0{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.paddinTB10{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.paddinTB20{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.paddingL0{
+	padding-left: 25px;
+}
+
+.paddingL30{
+	padding-left: 30px;
+}
+
+.paddingL75{
+	padding-left: 75px;
+}
+
+.paddingB10{
+	padding-bottom: 10px;
+}
+
+.paddingB20{
+	padding-bottom: 20px;
+}
+
+.paddingT10{
+	padding-top: 10px;
+}
+
+.paddingT15{
+	padding-top: 15px;
+}
+
+.paddingT20{
+	padding-top: 20px;
+}
+
+.paddingT40{
+	padding-top: 40px;
+}
+
+.paddingLR10{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.paddingLR40{
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+.paddingT30{
+	padding-top: 30px;
+}
+
+.fondoInput{
+	background-color: white;
+}
+
+.colorBack{
+	color: #ff9b71;
+}
+
+.blanco{
+	color: white;
+	font-family: 'Raleway', sans-serif;
+}
+
+.heightbtnCateg{
+	height: 100px;
+	text-align: bottom;
+}
+
+.categtxt{
+	position: absolute;
+	padding-top: 70px;
+}
+
+.mas{
+	font-size: 20px;
+	padding-right: 10px;
+}
+
+.txtcenter{
+	text-align: center;
+	font-family: 'Raleway', sans-serif;
+}
+
+.tituloIngredientes {
+	font-family: 'Raleway', sans-serif;
+}
+
+
+
+
+
+
+
