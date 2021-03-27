@@ -111,8 +111,10 @@
 	
 }
 
-.width260{
-	width: 260px;
+	/* WIDTH */
+
+.width230{
+	width: 230px;
 	text-align: center;
 }
 
@@ -120,14 +122,7 @@
 	width: 25%;
 }
 
-.nomargin{
-	margin-top: 0px;
-	margin-bottom: 0px;
-}
-
-.noPadLeft{
-	padding-right: 0px;
-}
+ /* ---------------- */
 
 fondoIcono{
 	background-image: black;
@@ -136,17 +131,6 @@ fondoIcono{
 .sizeIcono{
 	height: 64px;
 	width: 64px;
-}
-
-.paddingleft50{
-	padding-left: 50px;
-}
-
-
-
-.paddingMarginLeft10{
-	padding-left: 10px;
-	margin-left: 10px;
 }
 
 .colorbtnrojo{
@@ -161,7 +145,6 @@ fondoIcono{
 	font-family: 'Raleway', sans-serif;
 }
 
-
 .fondoClaro{
 	background-color: #f4f1de;
 }
@@ -174,10 +157,6 @@ fondoIcono{
 	margin-right: auto;
 }
 
-.margintop10{
-	margin-top: 10px;
-}
-
 .oculto{
 	display: none;
 	visibility: hidden;
@@ -187,9 +166,58 @@ fondoIcono{
 	visibility: visible;
 }
 
+ /* ---------------- */
+
+	/* MARGINGS */
+
+.nomargin{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.paddingMarginLeft10{
+	padding-left: 10px;
+	margin-left: 10px;
+}
+
+.margintop10{
+	margin-top: 10px;
+}
+
+.marginT15{
+	margin-top: 15px;
+}
+
+.marginT140{
+	margin-top: 140px;
+}
+
 .marginTopBot0{
 	margin-top: 0px;
 	margin-bottom: 0px;
+}
+
+.marginTB10{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.marginTB20{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.marginLR10{
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+}
+
+ /* ---------------- */
+
+	/* PADDINGS */
+	
+.nopaddingLInput{
+	--f7-list-item-padding-horizontal: 0px;
 }
 
 .paddinTB10{
@@ -202,16 +230,40 @@ fondoIcono{
 	padding-bottom: 20px;
 }
 
-.paddingL0{
-	padding-left: 25px;
+.paddingR0{
+	padding-right: 0px !important;
+}
+
+.noPadLeft{
+	padding-right: 0px;
+}
+
+.paddingL5{
+	padding-left: 5px;
+}
+
+.paddingL10{
+	padding-left: 10px;
+}
+
+.paddingL16{
+	padding-left: 16px;
 }
 
 .paddingL30{
 	padding-left: 30px;
 }
 
+.paddingleft50{
+	padding-left: 50px;
+}
+
 .paddingL75{
 	padding-left: 75px;
+}
+
+.paddingB2{
+	padding-bottom: 2px;
 }
 
 .paddingB10{
@@ -234,8 +286,16 @@ fondoIcono{
 	padding-top: 20px;
 }
 
+.paddingT30{
+	padding-top: 30px;
+}
+
 .paddingT40{
 	padding-top: 40px;
+}
+
+.paddingT100{
+	padding-top: 100px;
 }
 
 .paddingLR10{
@@ -248,9 +308,7 @@ fondoIcono{
 	padding-right: 40px;
 }
 
-.paddingT30{
-	padding-top: 30px;
-}
+ /* ---------------- */
 
 .fondoInput{
 	background-color: white;
@@ -263,6 +321,11 @@ fondoIcono{
 .blanco{
 	color: white;
 	font-family: 'Raleway', sans-serif;
+}
+
+.rojo{
+	color: #ff9b71;
+	font-weight: bold;
 }
 
 .heightbtnCateg{
@@ -285,13 +348,62 @@ fondoIcono{
 	font-family: 'Raleway', sans-serif;
 }
 
-.tituloIngredientes {
+.fontRaleway {
 	font-family: 'Raleway', sans-serif;
 }
 
+.redline{
+	background-color: #ff9b71;
+	height: 21px;
+}
 
+.listaReceta{
+	width: 100%;
+	height: 150px;
+	border-radius: 10px;
+}
 
+.transLine{
+	background-color: gray;
+	background: rgba(, , , 0.6);
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	height: 36px;
+	border-radius: 0px 0px 10px 10px;
+	
+}
 
+.txtBottom{
+	text-align: center;
+	vertical-align: text-bottom;
+}
 
+.linklistaReceta{
+	width: 100% !important;
+	height: 150px !important;	
+}
 
+.noOpacity{
+	opacity: 1 !important;
+}
 
+.aligntxtLeft{
+	text-align: left;
+}
+
+.aligntxtCenter{
+	text-align: center;
+}
+
+.aligntxtRight{
+	text-align: right;
+}
+
+.gradientRed{
+	background-image: linear-gradient(to right, #ff9b71 , #f4f1de);
+}
+
+.rounded5{
+	border-radius: 5px;
+}

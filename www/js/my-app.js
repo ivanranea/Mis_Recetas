@@ -94,7 +94,9 @@ var mainView = app.views.create('.view-main');
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 	
-	
+		$$("#toolbarInferior").addClass("oculto");
+		$$("#IconoBack").addClass("oculto");
+		$$("#upperNavbar").addClass("oculto");
 	/*
 	for (i=0; i<5; i++){
 		
@@ -117,6 +119,10 @@ $$(document).on('page:init', '.page[data-name="registro"]', function (e) {
 
 	
 	$$("#btnregistro").on("click", fnRegistrarUsuario);
+	$$("#titulonavbar").text("Registro");
+	fnIconobackVisible();
+	fnNavbarVisible();
+	
 
 })
 
@@ -125,21 +131,19 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
 	$$("#upperNavbar").addClass("oculto");
-	$$("#toolbarInferior").addClass("oculto");
+	fnToolbarkOculto();
+	fnIconobackOculto();
+	fnNavbarOculto();
 	$$("#btnlogin").on("click", fnLogin);
-	
-	
-	
-	
 
 })
 
 $$(document).on('page:init', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
-	$$("#toolbarInferior").removeClass("oculto");
-	$$("#IconoBack").addClass("oculto");
-	$$("#upperNavbar").removeClass("oculto");
+	fnToolbarkVisible();
+	fnIconobackOculto();
+	fnNavbarVisible();
 	$$("#titulonavbar").text("Categorías");
 	mostrarCateg();
 	
@@ -163,54 +167,38 @@ $$(document).on('page:init', '.page[data-name="crearCateg"]', function (e) {
 $$(document).on('page:init', '.page[data-name="editarCateg"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
-	var ids = [];
-	var idicono =  "";
-	var query = colCateg.where("email", "==", emailUsuario).where("nombre", "==", txtnombre);
+	fnEditarCateg();
+	fnIconobackVisible();
+})
+
+$$(document).on('page:beforein', '.page[data-name="categElegida"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
 	
-	query.get()
-	.then(function (querySnapshot){
-		querySnapshot.forEach(function(doc){
-			
-			ids.push(doc.id);
-			idicono = doc.data().icono;
-		});
-		
-		for(i=0; i<(ids.length); i++){
-			
-			if(ids[i] == idCategSelec){
-				$$("#nombreEditarCateg").val(txtnombre);
-			}
-		}
-		
-		$$("#IconoEditarCateg").attr("src", idicono);
-		
-		$$("#btnactualizarCateg").on("click", fnActualizarCategs);
-		$$(".popIconoEdit").on("click", fnEditarIcono);
-	})
-	.catch(function (error){
-		console.log("Error");
-	});
+	$$("#contenedorRecetas").html("");
 
 })
 
-$$(document).on('page:init', '.page[data-name="categElegida"]', function (e) {
+$$(document).on('page:afterin', '.page[data-name="categElegida"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-
+	
+	fnIconobackOculto();
 	fnMostrarRecetas();
-	$$("#btnborrarCateg").on("click", fnBorrarCateg);
+
 })
 
 $$(document).on('page:init', '.page[data-name="crearReceta"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
 	$$("#titulonavbar").text("Crea tu Receta");
+	fnIconobackOculto();
 	fnCreaciondeReceta();
 	
 })
 
-$$(document).on('page:init', '.page[data-name="recetaElegida"]', function (e) {
+$$(document).on('page:afterin', '.page[data-name="recetaElegida"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-
+	
+	fnIconobackVisible();
 	fnRecetaElegida();
 
 })
@@ -218,6 +206,7 @@ $$(document).on('page:init', '.page[data-name="recetaElegida"]', function (e) {
 $$(document).on('page:init', '.page[data-name="editarReceta"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 
+	fnIconobackVisible();
 	fnrellenarEditReceta();
 	$$("#btnactualizarReceta").on("click", fnActualizarReceta);
 
@@ -359,11 +348,7 @@ function mostrarCateg (){
 			idcateg.push(doc.id);
 			idicono.push(doc.data().icono);
 			
-		});
-		
-		/*var pathReference = storageImg.ref('imgs/pasta.jpg');*/
-		
-		
+		});	
 
 		var k = 0;
 		largo = Math.ceil((nombres.length/2));
@@ -462,8 +447,8 @@ function fnAñadirIngrediente(){
 				<div class="list no-hairlines-md col-50 nomargin">
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro">
-					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Ingrediente</div>
+					<div class="item-inner fondoClaro paddingR0">
+						<div class="item-title item-label paddingB2">Ingrediente</div>
 						<div class="item-input-wrap fondoInput">
 						<input id="nombreIng`+contIngred+`" type="text" autocomplete="off"/>
 						</div>
@@ -488,9 +473,9 @@ function fnAñadirIngrediente(){
 				
 				<div class="list no-hairlines-md col-25 nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline fondoClaro paddingL0">
+					<li class="item-content item-input item-input-outline fondoClaro nopaddingLInput">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Unid.</div>
+						<div class="item-title item-label paddingL10">Unid.</div>
 						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidad`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
@@ -594,8 +579,10 @@ function fnCrearReceta(){
 				console.error("Error: " +error);
 				});
 				
-				}
-				contIngred = 0;
+			}
+			
+			contIngred = 0;
+			app.views.main.router.navigate("/principal/");
 		})
 		.catch((error) => {
 			
@@ -638,17 +625,15 @@ function fnMostrarRecetas(){
 	queryRecetas.get()
 	.then(function (querySnapshot){
 		querySnapshot.forEach(function(doc){
-			
 			$$("#contenedorRecetas").append(`
-			<a id="`+doc.data().nombre+`" href="/recetaElegida/" class="button contenedorImg linkReceta">
-			`+doc.data().nombre+`
-			
-			</a>
+			<div class='listaReceta colorbtnverde marginTB10'><a id="`+doc.data().nombre+`" href="/recetaElegida/" class="button contenedorImg linklistaReceta linkReceta"><div class="transLine"><p class='blanco noOpacity nomargin'>`+doc.data().nombre+`</p></div></a></div>
 			`);
 			//<img src="img/pizza.jpg" class="crop"> <p class="centerTextimg">`+doc.data().nombre+`</p>
 		});
 		
 		$$(".linkReceta").on("click", fnTomarIdReceta);
+		$$("#btnborrarCateg").on("click", fnBorrarCateg);
+		$$("#titulonavbar").text(txtnombre);
 		
 	})
 	.catch(function (error){
@@ -674,7 +659,7 @@ function fnRecetaElegida(){
 			
 		});
 		
-		$$("#NombreReceta").text(nombre);
+		$$("#titulonavbar").text(nombre);
 		$$("#elabReceta").text(elab);
 		
 		colRecetas.doc(docID).collection("ingredientes").get()
@@ -683,9 +668,9 @@ function fnRecetaElegida(){
 			
 			$$("#IngredientesReceta").append(`
 				<div class="row">
-				<p class="col-50">`+doc.data().nombre+`</p>
-				<p class="col-25">`+doc.data().cantidad+`</p>
-				<p class="col-25">`+doc.data().unidadmedida+`</p>
+				<p class="col-65 marginTB10 fontRaleway">`+doc.data().nombre+`</p>
+				<p class="col-15 aligntxtCenter marginTB10 fontRaleway">`+doc.data().cantidad+`</p>
+				<p class="col-20 aligntxtLeft marginTB10 fontRaleway">`+doc.data().unidadmedida+`</p>
 				</div>
 			`);
 		});
@@ -830,11 +815,10 @@ function fnAñadirIngredienteEdit(){
 				<div class="list no-hairlines-md col nomargin">
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro">
-					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Ingrediente</div>
+					<div class="item-inner fondoClaro paddingR0">
+						<div class="item-title item-label paddingB2">Ingrediente</div>
 						<div class="item-input-wrap fondoInput">
 						<input id="nombreIngEdit`+contIngred+`" type="text"/>
-						<span class="input-clear-button"></span>
 						</div>
 					</div>
 					</li>
@@ -849,7 +833,6 @@ function fnAñadirIngredienteEdit(){
 						<div class="item-title item-label">Cantidad</div>
 						<div class="item-input-wrap fondoInput">
 						<input id="cantidadEdit`+contIngred+`" type="text"/>
-						<span class="input-clear-button"></span>
 						</div>
 					</div>
 					</li>
@@ -858,9 +841,9 @@ function fnAñadirIngredienteEdit(){
 				
 				<div class="list no-hairlines-md col nomargin">
 					<ul>
-					<li class="item-content item-input item-input-outline fondoClaro">
+					<li class="item-content item-input item-input-outline fondoClaro nopaddingLInput">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Unidad</div>
+						<div class="item-title item-label paddingL10">Unidad</div>
 						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidadEdit`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
@@ -985,15 +968,76 @@ function fnNavbarVisible(){
 	
 }
 
+function fnEditarCateg(){
+	var ids = [];
+	var idicono =  "";
+	var query = colCateg.where("email", "==", emailUsuario).where("nombre", "==", txtnombre);
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			ids.push(doc.id);
+			idicono = doc.data().icono;
+		});
+		
+		for(i=0; i<(ids.length); i++){
+			
+			if(ids[i] == idCategSelec){
+				$$("#nombreEditarCateg").val(txtnombre);
+			}
+		}
+		
+		$$("#IconoEditarCateg").attr("src", idicono);
+		
+		$$("#btnactualizarCateg").on("click", fnActualizarCategs);
+		$$(".popIconoEdit").on("click", fnEditarIcono);
+	})
+	.catch(function (error){
+		console.log("Error");
+	});
+}
 
+function fnIconobackVisible(){
+	
+	if(($$("#IconoBack").hasClass("oculto"))==true){
+		
+		$$("#IconoBack").removeClass("oculto");
+		$$("#IconoBack").addClass("visible");
+		
+	}
+	
+}
 
+function fnIconobackOculto(){
+	
+	if(($$("#IconoBack").hasClass("visible"))==true){
+		
+		$$("#IconoBack").removeClass("visible");
+		$$("#IconoBack").addClass("oculto");
+		
+	}
+}
 
+function fnToolbarkOculto(){
+	
+	if(($$("#toolbarInferior").hasClass("visible"))==true){
+		
+		$$("#toolbarInferior").removeClass("visible");
+		$$("#toolbarInferior").addClass("oculto");
+		
+	}
+}
 
-
-
-
-
-
+function fnToolbarkVisible(){
+	
+	if(($$("#toolbarInferior").hasClass("oculto"))==true){
+		
+		$$("#toolbarInferior").removeClass("oculto");
+		$$("#toolbarInferior").addClass("visible");
+		
+	}
+}
 
 
 
