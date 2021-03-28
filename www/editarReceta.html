@@ -10,51 +10,61 @@
         <div class="title">Editar Receta</div>
         </div>
     </div>
-    <div class="page-content">
-
+    <div class="page-content fondoClaro">
+	<div class="block">
+	
 		<div class="list no-hairlines-md">
 		<ul>
-			<li class="item-content item-input item-input-outline">
-			<div class="item-inner">
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner fondoClaro">
 				<div class="item-title item-label">Nombre</div>
-				<div class="item-input-wrap">
-				<input id="nombreEditarReceta" type="text" placeholder="Nombre de la receta" autocomplete="off" required/>
+				<div class="item-input-wrap fondoInput">
+				<input id="nombreEditarReceta" type="text" autocomplete="off" required/>
+				</div>
+			</div>
+			</li>
+			
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner">
+				<div class="item-title item-label paddingB2">Categoría</div>
+				<div class="item-input-wrap input-dropdown-wrap fondoInput">
+					<select id="selectCategedit">
+					
+					
+					</select>
+				
 				</div>
 			</div>
 			</li>
 		</ul>
 		</div>
 		
-		<div id="ingredientesAeditar">
+		<p class="fontRaleway paddingL16">Ingredientes</p>
+		<div id="ingredientesAeditar" class="fondoClaro">
 		
 		</div>
 		
-		<button id="btnAñadirIngredienteEdit" class="button button-fill button-round paddingLR40">+ Añadir</button>
+		<div class="paddingLR40 paddingT20"><button id="btnAñadirIngredienteEdit" class="button button-fill button-round colorbtnrojo"><p class="mas">+</p>Añadir</button></div>
 		
 		<div class="list no-hairlines-md">
 		<ul>
-			<li class="item-content item-input item-input-outline">
-			<div class="item-inner">
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner fondoClaro">
 				<div class="item-title item-label">Elaboración</div>
-				<div class="item-input-wrap">
-				<textarea id="editarElabReceta" class="resizable" required/></textarea>
-				<span class="input-clear-button"></span>
+				<div class="item-input-wrap fondoInput">
+				<textarea id="editarElabReceta" required/></textarea>
 				</div>
 			</div>
 			</li>
 		</ul>
 		</div>
 		
-		
-		<a id="imgEditarReceta" href="#" class="button button-large button-raised">Subir imagen</a>
-		
+		<div class="paddinTB20"><a id="imgEditarReceta" href="#" class="button button-raised button-fill button-round colorbtnrojo">Subir imagen</a></div>
         <!-- <img src="img/logo.png" id="foto" width="100%"> -->
-     
-		<a id="btnactualizarReceta" href="/principal/" class="button button-large button-raised">Actualizar</a>
+		<div class="paddinTB20"><a id="btnactualizarReceta" href="/principal/" class="button button-large button-raised button-fill button-round colorbtnrojo">Actualizar</a></div>
 		
+	</div>
     </div>
-	
-	
 	
 </div>
 

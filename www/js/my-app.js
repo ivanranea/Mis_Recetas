@@ -76,6 +76,7 @@ var colUsuarios = db.collection("usuarios");
 
 var idCategSelec = "";
 var idRecetaSelec = "";
+var idRecetaBorrar = "";
 var txtnombre = "";
 var contIngred = 0;
 const maxCateg = 12;
@@ -193,6 +194,15 @@ $$(document).on('page:init', '.page[data-name="crearReceta"]', function (e) {
 	fnIconobackOculto();
 	fnCreaciondeReceta();
 	
+})
+
+$$(document).on('page:beforein', '.page[data-name="recetaElegida"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+	
+	$$("#IngredientesReceta").html("");
+	$$("#elabReceta").text("");
+	fnIconobackVisible();
+
 })
 
 $$(document).on('page:afterin', '.page[data-name="recetaElegida"]', function (e) {
@@ -426,11 +436,10 @@ function fnBorrarCateg(){
 		.then(function (){
 			app.dialog.alert("Categoría borrada","Borrar Categoría");
 			app.views.main.router.navigate("/principal/");
-	})
-	.catch(function (error){
+		})
+		.catch(function (error){
 		console.log("Error");
-	});
-		
+		});
 		
 	});
 	
@@ -462,7 +471,7 @@ function fnAñadirIngrediente(){
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Cant.</div>
+						<div class="item-title item-label paddingB2">Cant.</div>
 						<div class="item-input-wrap fondoInput">
 						<input id="cantidad`+contIngred+`" type="text" autocomplete="off"/>
 						</div>
@@ -475,7 +484,7 @@ function fnAñadirIngrediente(){
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro nopaddingLInput">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label paddingL10">Unid.</div>
+						<div class="item-title item-label paddingL10 paddingB2">Unid.</div>
 						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidad`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
@@ -598,7 +607,6 @@ function fnCrearReceta(){
 function fnCreaciondeReceta(){
 	
 	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
-	var agregar = "";
 	
 	query.get()
 	.then(function (querySnapshot){
@@ -656,7 +664,7 @@ function fnRecetaElegida(){
 			nombre = doc.data().nombre;
 			elab = doc.data().elaboracion;
 			docID = doc.id;
-			
+			idRecetaBorrar = doc.id;
 		});
 		
 		$$("#titulonavbar").text(nombre);
@@ -674,6 +682,8 @@ function fnRecetaElegida(){
 				</div>
 			`);
 		});
+		
+		$$("#btnborrarReceta").on("click", fnBorrarReceta);
 		
 		})
 		.catch(function (error){
@@ -696,8 +706,9 @@ function fnTomarIdReceta(){
 
 function fnrellenarEditReceta(){
 	
-	nombreReceta = idRecetaSelec;
+	var nombreReceta = idRecetaSelec;
 	var elab = "";
+	var CategReceta = "";
 	
 	var query = colRecetas.where("nombre", "==", nombreReceta).where("email", "==", emailUsuario);
 	query.get()
@@ -706,8 +717,9 @@ function fnrellenarEditReceta(){
 			
 			recetaId = doc.id;
 			elab = doc.data().elaboracion;
-			});
-			
+			CategReceta = doc.data().categoria;
+		});
+
 			$$("#nombreEditarReceta").val(nombreReceta);
 			$$("#editarElabReceta").val(elab);
 			
@@ -723,14 +735,13 @@ function fnrellenarEditReceta(){
 					
 					<div class="row no-gap">
 						
-						<div class="list no-hairlines-md col nomargin">
+						<div class="list no-hairlines-md col-50 nomargin">
 							<ul>
-							<li class="item-content item-input item-input-outline">
-							<div class="item-inner">
-								<div class="item-title item-label">Ingrediente</div>
-								<div class="item-input-wrap">
+							<li class="item-content item-input item-input-outline fondoClaro">
+							<div class="item-inner fondoClaro paddingR0">
+								<div class="item-title item-label paddingB2">Ingrediente</div>
+								<div class="item-input-wrap fondoInput">
 								<input id="nombreIngEdit`+contIngred+`" type="text" autocomplete="off"/>
-								<span class="input-clear-button"></span>
 								</div>
 							</div>
 							</li>
@@ -738,26 +749,25 @@ function fnrellenarEditReceta(){
 						</div>
 						
 						
-						<div class="list no-hairlines-md col nomargin">
+						<div class="list no-hairlines-md col-25 nomargin">
 							<ul>
-							<li class="item-content item-input item-input-outline">
-							<div class="item-inner">
-								<div class="item-title item-label">Cantidad</div>
-								<div class="item-input-wrap">
+							<li class="item-content item-input item-input-outline fondoClaro">
+							<div class="item-inner fondoClaro">
+								<div class="item-title item-label paddingB2">Cant.</div>
+								<div class="item-input-wrap fondoInput">
 								<input id="cantidadEdit`+contIngred+`" type="text" autocomplete="off"/>
-								<span class="input-clear-button"></span>
 								</div>
 							</div>
 							</li>
 							</ul>
 						</div>
 						
-						<div class="list no-hairlines-md col nomargin">
+						<div class="list no-hairlines-md col-25 nomargin">
 							<ul>
-							<li class="item-content item-input item-input-outline">
-							<div class="item-inner">
-								<div class="item-title item-label">Unidad</div>
-								<div class="item-input-wrap input-dropdown-wrap">
+							<li class="item-content item-input item-input-outline fondoClaro nopaddingLInput">
+							<div class="item-inner fondoClaro">
+								<div class="item-title item-label paddingL10 paddingB2">Unid.</div>
+								<div class="item-input-wrap input-dropdown-wrap fondoInput">
 									<select id="unidadEdit`+contIngred+`" autocomplete="off">
 										<option value="unidad">Unidad/es</option>
 										<option value="grs">grs</option>
@@ -787,15 +797,31 @@ function fnrellenarEditReceta(){
 					$$("#unidadEdit"+contIngred).val(doc.data().unidadmedida);
 					
 				});
+			
+				var queryCateg = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
+				queryCateg.get()
+				.then(function (querySnapshot){
+					querySnapshot.forEach(function(doc){
 				
+						var nombre = doc.data().nombre;
+						var id = doc.id;
+						
+						$$("#selectCategedit").append("<option value='"+id+"'>"+nombre+"</option>");
+						
+						if(id == CategReceta){
+							console.log("Coincidencia: "+id+" | "+CategReceta);
+							$$("#selectCategedit").val(id);
+							
+						}
+					});
+				})
+				.catch(function (error){
+					console.log("Error: " +error);
+				});
+			
 			$$("#btnAñadirIngredienteEdit").on("click", fnAñadirIngredienteEdit);
 			
 			})
-		
-		
-		
-		
-		
 	})
 	.catch(function (error){
 		console.log("Error: " +error);
@@ -830,7 +856,7 @@ function fnAñadirIngredienteEdit(){
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label">Cantidad</div>
+						<div class="item-title item-label paddingB2">Cant.</div>
 						<div class="item-input-wrap fondoInput">
 						<input id="cantidadEdit`+contIngred+`" type="text"/>
 						</div>
@@ -843,7 +869,7 @@ function fnAñadirIngredienteEdit(){
 					<ul>
 					<li class="item-content item-input item-input-outline fondoClaro nopaddingLInput">
 					<div class="item-inner fondoClaro">
-						<div class="item-title item-label paddingL10">Unidad</div>
+						<div class="item-title item-label paddingL10 paddingB2">Unid.</div>
 						<div class="item-input-wrap input-dropdown-wrap fondoInput">
 							<select id="unidadEdit`+contIngred+`">
 								<option value="unidad">Unidad/es</option>
@@ -1039,7 +1065,21 @@ function fnToolbarkVisible(){
 	}
 }
 
-
+function fnBorrarReceta(){
+	
+	app.dialog.confirm("Esta seguro que desea borrar la receta?", "Borrar Receta", function(){
+		
+		colRecetas.doc(idRecetaBorrar).delete() //BORRAR INGREDIENTES
+		.then(function (){
+			app.dialog.alert("Receta borrada","Borrar Receta");
+			app.views.main.router.navigate("/principal/");
+		})
+		.catch(function (error){
+			console.log("Error");
+		});
+	});	
+	
+}
 
 
 
