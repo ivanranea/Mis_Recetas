@@ -1,0 +1,51 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="buscador">
+    <div class="navbar">
+        <div class="navbar-inner sliding">
+        <div class="left">
+            <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+            </a>
+        </div>
+        <div class="title">Buscador</div>
+        </div>
+    </div>
+    <div class="page-content fondoClaro">
+	<div class="block">
+		
+		<div class="list no-hairlines-md">
+		<ul>
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner fondoClaro">
+				<div class="item-title item-label">Nombre</div>
+				<div class="item-input-wrap fondoInput">
+				<input id="nombreBuscar" type="text" placeholder="Nombre de la Receta" autocomplete="off"/>
+				</div>
+			</div>
+			</li>
+			
+			<li class="item-content item-input item-input-outline fondoClaro">
+			<div class="item-inner">
+				<div class="item-title item-label paddingB2">Categoría</div>
+				<div class="item-input-wrap input-dropdown-wrap fondoInput">
+					<select id="selectCategbuscar">
+					
+					
+					</select>
+				
+				</div>
+			</div>
+			</li>
+		</ul>
+		</div>
+		<p class="fontRaleway paddingL16 aligntxtCenter">Ingredientes</p>
+		<div id="contenedorBuscarIngredientes">
+		</div>
+		
+		<div class="paddingLR40 paddingT20"><button id="btnAñadirIngredienteBuscar" class="button button-fill button-round colorbtnrojo"><p class="mas">+</p>Añadir</button></div>
+		<div class="paddingT40"><a id="btnbuscar" href="#" class="button button-large button-raised button-round colorbtnrojo">Buscar</a></div>
+		
+	</div>
+    </div>
+</div>

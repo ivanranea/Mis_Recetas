@@ -136,10 +136,17 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 	fnIconobackOculto();
 	fnNavbarOculto();
 	$$("#btnlogin").on("click", fnLogin);
+	$$("#btntest").on("click", fnTest);
 
 })
 
-$$(document).on('page:init', '.page[data-name="principal"]', function (e) {
+$$(document).on('page:beforein', '.page[data-name="principal"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+	
+	$$("#contenedorCateg").html("");
+})
+
+$$(document).on('page:afterin', '.page[data-name="principal"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
 	
 	fnToolbarkVisible();
@@ -220,6 +227,12 @@ $$(document).on('page:init', '.page[data-name="editarReceta"]', function (e) {
 	fnrellenarEditReceta();
 	$$("#btnactualizarReceta").on("click", fnActualizarReceta);
 
+})
+
+$$(document).on('page:init', '.page[data-name="buscador"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+
+	fnBuscador();
 })
 
 function fnRegistrarUsuario(){
@@ -420,6 +433,7 @@ function fnActualizarCategs(){
 	
 	.then(function(){
 		console.log("Actualizado");
+		app.views.main.router.navigate("/principal/");
 	})
 	.catch(function (error){
 		
@@ -431,16 +445,45 @@ function fnActualizarCategs(){
 function fnBorrarCateg(){
 	
 	app.dialog.confirm("Esta seguro que desea borrar la categoría? </br>Las recetas de esta categoría también serán borradas.", "Borrar Categoría", function(){
+	
+		var recetasid = [];
 		
-		colCateg.doc(idCategSelec).delete()
-		.then(function (){
-			app.dialog.alert("Categoría borrada","Borrar Categoría");
-			app.views.main.router.navigate("/principal/");
+		var queryRecetas = colRecetas.where("email", "==", emailUsuario).where("categoria", "==", idCategSelec);
+		queryRecetas.get()
+		.then(function (querySnapshot){
+			querySnapshot.forEach(function(doc){
+				
+				recetasid.push(doc.id);
+				console.log("id recetas:" +doc.id);
+				
+			})
+			
+			for(i=0; i<(recetasid.length); i++){
+				
+				colRecetas.doc(recetasid[i]).delete()
+				.then(function (){
+					console.log("Receta borrada");
+				})
+				.catch(function (error){
+					console.log("Error borrar receta:"+error);
+				});
+			}
+			
+			colCateg.doc(idCategSelec).delete()
+			.then(function (){
+				
+				app.dialog.alert("Categoría borrada","Borrar Categoría");
+				app.views.main.router.navigate("/principal/");
+			})
+			.catch(function (error){
+			console.log("Error");
+			});
+	
 		})
 		.catch(function (error){
-		console.log("Error");
+			console.log("Error"+error);
 		});
-		
+	
 	});
 	
 }
@@ -1069,20 +1112,154 @@ function fnBorrarReceta(){
 	
 	app.dialog.confirm("Esta seguro que desea borrar la receta?", "Borrar Receta", function(){
 		
+		
 		colRecetas.doc(idRecetaBorrar).delete() //BORRAR INGREDIENTES
 		.then(function (){
+			
 			app.dialog.alert("Receta borrada","Borrar Receta");
 			app.views.main.router.navigate("/principal/");
+
 		})
 		.catch(function (error){
-			console.log("Error");
+			console.log("Error:" + error);
 		});
 	});	
 	
 }
 
+function fnBuscador(){
+	
+	var query = colCateg.where("email", "==", emailUsuario).orderBy("nombre");
+	
+	query.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			var nombre = doc.data().nombre;
+			var id = doc.id;
+			$$("#selectCategbuscar").append("<option value='"+id+"'>"+nombre+"</option>");
+			
+		});
+		
+		$$("#btnAñadirIngredienteBuscar").on("click", fnAñadirIngredienteBuscar);
+		$$("#btnbuscar").on("click", fnBuscar);
+		
+	})
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
+}
 
+function fnAñadirIngredienteBuscar(){
+	
+	contIngred++;
+	
+	$$("#contenedorBuscarIngredientes").append(`
+	
+			<div class="row no-gap">
+				
+				<div class="list no-hairlines-md col nomargin">
+					<ul>
+					<li class="item-content item-input item-input-outline fondoClaro">
+					<div class="item-inner fondoClaro paddingR0">
+						<div class="item-title item-label paddingB2">Nombre</div>
+						<div class="item-input-wrap fondoInput">
+						<input id="nombreIngB`+contIngred+`" type="text" autocomplete="off"/>
+						</div>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+			</div>
+	`)
+}
 
+function fnBuscar(){
+	
+	var nombreRecetaBuscar = $$("#nombreBuscar").val();
+	var categRecetaBuscar = $$("#selectCategbuscar").val();
+	var ingredienteBuscar = [];
+		ingredienteBuscar[0] = "";
+	var resultadoIngredientes = [];
+	var temp = "";
+	var queryIngredientes = "";
+	var queryBuscar = "";
+	
+	for(i=1; i<=contIngred; i++){
+		temp = $$("#nombreIngB"+i).val();
+		ingredienteBuscar.push(temp);
+	}
+	
+	if((nombreRecetaBuscar == "")&&(categRecetaBuscar == "")&&(ingredienteBuscar[0] == "")){
+		app.dialog.alert("Debe ingresar al menos un campo para buscar.");
+		return;
+	}
+	
+	for(i=0; i<(ingredienteBuscar.length); i++){
+		colRecetas.doc().collection("ingredientes").where("nombre", "==", ingredienteBuscar[i]).get()
+		.then(function (querySnapshot){
+			querySnapshot.forEach(function (doc){
+				
+				resultadoIngredientes.push(doc.id);
+				
+			});
+		})
+		.catch(function (error){
+			console.log("Error: "+error);
+		});
+	}	
+	
+	if((nombreRecetaBuscar != "")&&(categRecetaBuscar != "")){
+		
+		queryBuscar = colRecetas.where("categoria", "==", categRecetaBuscar).where("nombre", "==", nombreRecetaBuscar);
+		
+	}else if(nombreRecetaBuscar == ""){
+		
+		queryBuscar = colRecetas.where("categoria", "==", categRecetaBuscar);
+		
+	}else if(categRecetaBuscar == ""){
+		
+		queryBuscar = colRecetas.where("nombre", "==", nombreRecetaBuscar);
+	}
+	
+	queryBuscar.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function (doc){
+			
+			var
+		});
+		
+		
+		
+	});
+	.catch(function(error){
+		
+	});
+	
+}
 
+function fnTest(){
+	
+	
+	var queryBuscar = colRecetas.where("categoria", "==", "Mdz0lzMizla7Sw3XsbXF");
+	queryBuscar = colRecetas.where("nombre", "==", "Choripan");
+	
+	queryBuscar.get()
+	.then(function (querySnapshot){
+		querySnapshot.forEach(function(doc){
+			
+			console.log("Nombre: "+doc.data().nombre);
+			console.log("id: "+doc.id);
+			console.log("Categoría: "+doc.data().categoria);
+			
+		});
+		
+		
+	});
+	.catch(function (error){
+		console.log("Error: " +error);
+	});
+}
 
 
